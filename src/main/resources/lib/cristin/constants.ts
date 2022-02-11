@@ -1,0 +1,9 @@
+export const REPO_CRISTIN_INSTITUTIONS = "no.item.cristin.institutions";
+export const REPO_CRISTIN_PERSONS = "no.item.cristin.persons";
+export const REPO_CRISTIN_PROJECTS = "no.item.cristin.projects";
+export const REPO_CRISTIN_RESULTS = "no.item.cristin.results";
+export const REPO_CRISTIN_UNITS = "no.item.cristin.units";
+export const BRANCH_MASTER = "master";
+export const URL_CRISTIN = "https://api.cristin.no/v2";
+export const BINARY_REFERENCE_PICTURE = "picture";
+export const LANG_PARAMS_DEFAULT = "en,nb";
