@@ -1,4 +1,11 @@
-import { type GraphQLResolverEnvironment, type GraphQLObjectType, GraphQLString, nonNull, list } from "/lib/graphql";
+import {
+  GraphQLString,
+  Json,
+  nonNull,
+  list,
+  type GraphQLResolverEnvironment,
+  type GraphQLObjectType,
+} from "/lib/graphql";
 import { type Context } from "/lib/guillotine";
 import {
   GRAPHQL_OBJECT_NAME_CRISTIN_PROJECT,
@@ -188,6 +195,11 @@ export function createObjectTypeCristinProject(context: Context, options?: Conte
             name: getLocalized(env, fundingSource.funding_source_name),
           }));
         },
+      },
+
+      dataAsJson: {
+        type: Json,
+        resolve: (env: GraphQLResolverEnvironment<Project>) => env.source,
       },
     },
   });

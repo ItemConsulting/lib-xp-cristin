@@ -3,17 +3,18 @@ import { GRAPHQL_OBJECT_NAME_CRISTIN_PERSON, GraphQLCristinInstitution } from "/
 import {
   GraphQLBoolean,
   GraphQLString,
+  Json,
   list,
   nonNull,
   type GraphQLResolverEnvironment,
   type GraphQLObjectType,
 } from "/lib/graphql";
-import { type Context } from "/lib/guillotine";
-import { type CristinPersonAffiliation, type Person } from "/lib/cristin/types/generated";
 import { getLocalized } from "/lib/cristin/utils/locale";
 import { forceArray } from "/lib/cristin/utils";
 import { createObjectType, type ContextOptions } from "/lib/cristin/graphql/graphql-utils";
 import { serviceUrl } from "/lib/xp/portal";
+import type { Context } from "/lib/guillotine";
+import type { CristinPersonAffiliation, Person } from "/lib/cristin/types/generated";
 
 export function createObjectTypeCristinPerson(context: Context, options?: ContextOptions): GraphQLObjectType {
   const cristinPersonAffiliationObjectType = createObjectType(context, options, {
@@ -92,6 +93,10 @@ export function createObjectTypeCristinPerson(context: Context, options?: Contex
               })
             : undefined;
         },
+      },
+      dataAsJson: {
+        type: Json,
+        resolve: (env: GraphQLResolverEnvironment<Person>) => env.source,
       },
     },
   });

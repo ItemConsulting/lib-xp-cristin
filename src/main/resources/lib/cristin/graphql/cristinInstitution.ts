@@ -1,4 +1,10 @@
-import { GraphQLBoolean, type GraphQLResolverEnvironment, type GraphQLObjectType, GraphQLString } from "/lib/graphql";
+import {
+  GraphQLBoolean,
+  GraphQLString,
+  Json,
+  type GraphQLResolverEnvironment,
+  type GraphQLObjectType,
+} from "/lib/graphql";
 import { type Context } from "/lib/guillotine";
 import { getCristinUnit } from "../index";
 import { getLocalized } from "/lib/cristin/utils/locale";
@@ -44,6 +50,11 @@ export function createObjectTypeCristinInstitution(context: Context, options?: C
           env.source.corresponding_unit?.cristin_unit_id
             ? getCristinUnit(env.source.corresponding_unit?.cristin_unit_id)
             : undefined,
+      },
+
+      dataAsJson: {
+        type: Json,
+        resolve: (env: GraphQLResolverEnvironment<Institution>) => env.source,
       },
     },
   });
