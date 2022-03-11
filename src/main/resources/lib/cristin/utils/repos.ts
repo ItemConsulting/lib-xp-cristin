@@ -6,7 +6,8 @@ import { forceArray } from "/lib/cristin/utils";
 export interface CristinNode<Data> {
   _name: string;
   data: Data;
-  topics: Array<string>;
+  topics?: Array<string>;
+  hidden?: boolean;
 }
 
 export function getOrCreateRepoConnection(repoName: string): RepoConnection {
