@@ -1,6 +1,6 @@
 import { get as getRepo, create as createRepo } from "/lib/xp/repo";
 import { connect, type RepoConnection, type NodeQueryHit, type NodeCreateParams, type RepoNode } from "/lib/xp/node";
-import { BRANCH_MASTER } from "/lib/cristin/constants";
+import { BRANCH_MASTER, DEFAULT_PERMISSIONS } from "/lib/cristin/constants";
 import { forceArray } from "/lib/cristin/utils";
 
 export interface CristinNode<Data> {
@@ -10,19 +10,18 @@ export interface CristinNode<Data> {
   hidden?: boolean;
 }
 
-export function getOrCreateRepoConnection(repoName: string): RepoConnection {
-  let repo = getRepo(repoName);
+export function ensureRepoExist(repoName: string): boolean {
+  const repo = getRepo(repoName);
+  const repoExisted = repo !== null;
 
-  if (repo === null) {
-    repo = createRepo({
+  if (!repoExisted) {
+    createRepo({
       id: repoName,
+      rootPermissions: DEFAULT_PERMISSIONS,
     });
   }
 
-  return connect({
-    repoId: repo.id,
-    branch: BRANCH_MASTER,
-  });
+  return repoExisted;
 }
 
 export function getNodeByDataId(connection: RepoConnection, ids: string | Array<string>): ReadonlyArray<NodeQueryHit> {
@@ -67,6 +66,7 @@ function getCristinNodeCreateParams<NodeData>(id: string, data: NodeData): Crist
     _indexConfig: {
       default: "fulltext",
     },
+    _inheritsPermissions: true,
     _name: id,
     data,
     topics: [],
