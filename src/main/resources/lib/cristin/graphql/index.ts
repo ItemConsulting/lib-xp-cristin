@@ -1,7 +1,7 @@
 import { createObjectTypeCristinPerson } from "./cristinPerson";
 import { createObjectTypeCristinInstitution } from "./cristinInstitution";
 import { createObjectTypeCristinProject } from "./cristinProject";
-import { createObjectTypeCristinResult } from "./cristinResult";
+import { createObjectTypeCristinResult, createObjectTypeCristinResultCategory } from "./cristinResult";
 import { createObjectTypeCristinUnit } from "./cristinUnit";
 import {
   GRAPHQL_OBJECT_NAME_CRISTIN_UNIT,
@@ -31,5 +31,6 @@ export {
   createObjectTypeCristinInstitution,
   createObjectTypeCristinProject,
   createObjectTypeCristinResult,
+  createObjectTypeCristinResultCategory,
   createObjectTypeCristinUnit,
 };

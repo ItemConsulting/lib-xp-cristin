@@ -114,3 +114,18 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
     },
   });
 }
+
+export function createObjectTypeCristinResultCategory(context: Context, options?: ContextOptions): GraphQLObjectType {
+  return createObjectType(context, options, {
+    name: `${GRAPHQL_OBJECT_NAME_CRISTIN_RESULT}_Categories`,
+    fields: {
+      code: {
+        type: nonNull(GraphQLString),
+      },
+      name: {
+        type: nonNull(GraphQLString),
+        resolve: (env: GraphQLResolverEnvironment<CristinResultCategory>) => getLocalized(env, env.source.name),
+      },
+    },
+  });
+}

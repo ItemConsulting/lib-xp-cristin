@@ -1,6 +1,6 @@
 {
   "name": "xp-lib-cristin",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Library for retrieving and storing data from Cristin",
   "license": "MIT",
   "private": true,
@@ -22,7 +22,7 @@
     "babel-loader": "^8.2.3",
     "browserslist-config-enonic": "^1.0.6",
     "cross-env": "^7.0.3",
-    "enonic-types": "^0.3.19",
+    "enonic-types": "^0.4.4",
     "eslint": "^8.9.0",
     "eslint-config-prettier": "^8.4.0",
     "eslint-plugin-prettier": "^4.0.0",
