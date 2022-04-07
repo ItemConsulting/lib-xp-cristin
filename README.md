@@ -38,6 +38,7 @@ The library includes the following functions:
 * `getCristinProject(id)`
 * `getCristinUnit(id)`
 * `getCristinResult(id)`
+* `getCristinResultContributors(id)`
 
 ### Controllers
 

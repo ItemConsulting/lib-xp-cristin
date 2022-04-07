@@ -1,4 +1,5 @@
 import { get as getRepo, create as createRepo } from "/lib/xp/repo";
+import { run } from "/lib/xp/context";
 import { connect, type RepoConnection, type NodeQueryHit, type NodeCreateParams, type RepoNode } from "/lib/xp/node";
 import { BRANCH_MASTER, DEFAULT_PERMISSIONS } from "/lib/cristin/constants";
 import { forceArray } from "/lib/cristin/utils";
@@ -54,9 +55,24 @@ export function getEntriesByName<NodeData>(repoId: string, name: Array<string>):
     .map((id) => connection.get<NodeData>(id));
 }
 
-export function saveToRepo<NodeData>({ data, id, connection }: SaveToRepoParams<NodeData>): NodeData | void {
+export function saveToRepo<NodeData>({ data, id, connection, repoId }: SaveToRepoParams<NodeData>): NodeData | void {
   if (data) {
-    connection.create(getCristinNodeCreateParams<NodeData>(id, data));
+    try {
+      run(
+        {
+          repository: repoId,
+          branch: BRANCH_MASTER,
+          user: {
+            idProvider: "system",
+            login: "su",
+          },
+        },
+        () => connection.create(getCristinNodeCreateParams<NodeData>(id, data))
+      );
+    } catch (e) {
+      log.error(`Could not create content in repo "${repoId}" with id: "${id}"`, e);
+    }
+
     return data;
   }
 }
@@ -76,5 +92,6 @@ function getCristinNodeCreateParams<NodeData>(id: string, data: NodeData): Crist
 export interface SaveToRepoParams<NodeData> {
   id: string;
   connection: RepoConnection;
+  repoId: string;
   data?: NodeData;
 }

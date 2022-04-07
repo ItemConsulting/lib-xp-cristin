@@ -1,5 +1,6 @@
 import {
   GraphQLString,
+  GraphQLInt,
   Json,
   nonNull,
   list,
@@ -7,10 +8,25 @@ import {
   type GraphQLObjectType,
 } from "/lib/graphql";
 import { type Context } from "/lib/guillotine";
-import { type CristinResultCategory, type CristinResultJournal, type Result } from "/lib/cristin/types/generated";
+import {
+  type CristinResultCategory,
+  CristinResultContributor,
+  CristinResultContributorAffiliation,
+  CristinResultContributorAffiliationsRole,
+  type CristinResultJournal,
+  Institution,
+  ListOfResultContributors,
+  type Result,
+} from "/lib/cristin/types/generated";
 import { getLocalized } from "/lib/cristin/utils/locale";
-import { GRAPHQL_OBJECT_NAME_CRISTIN_RESULT } from "/lib/cristin/graphql/constants";
+import {
+  GRAPHQL_OBJECT_NAME_CRISTIN_RESULT,
+  GraphQLCristinInstitution,
+  GraphQLCristinUnit,
+} from "/lib/cristin/graphql/constants";
 import { ContextOptions, createObjectType } from "/lib/cristin/graphql/graphql-utils";
+import { getCristinInstitution, getCristinResultContributors, getCristinUnit } from "/lib/cristin";
+import { Unit } from "*/lib/cristin";
 import { forceArray } from "/lib/cristin/utils";
 
 export function createObjectTypeCristinResult(context: Context, options?: ContextOptions): GraphQLObjectType {
@@ -48,15 +64,74 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
     },
   });
 
+  const affiliationRole = createObjectType(context, options, {
+    name: context.uniqueName(`${GRAPHQL_OBJECT_NAME_CRISTIN_RESULT}_Contributors_Affiliation_Role`),
+    description: "A role of a contributor to a Cristin Result",
+    fields: {
+      code: {
+        type: nonNull(GraphQLString),
+        resolve: (env: GraphQLResolverEnvironment<CristinResultContributorAffiliationsRole>): string => env.source.code,
+      },
+      name: {
+        type: GraphQLString,
+        resolve: (env: GraphQLResolverEnvironment<CristinResultContributorAffiliationsRole>): string | undefined =>
+          getLocalized(env, env.source.name),
+      },
+    },
+  });
+
+  const affiliation = createObjectType(context, options, {
+    name: context.uniqueName(`${GRAPHQL_OBJECT_NAME_CRISTIN_RESULT}_Contributors_Affiliation`),
+    description: "A Cristin Result contributors affiliations",
+    fields: {
+      role: {
+        type: affiliationRole,
+        resolve: (
+          env: GraphQLResolverEnvironment<CristinResultContributorAffiliation>
+        ): CristinResultContributorAffiliationsRole | undefined => env.source.role,
+      },
+      institution: {
+        type: GraphQLCristinInstitution,
+        resolve: (env: GraphQLResolverEnvironment<CristinResultContributorAffiliation>): Institution | void => {
+          return env.source.institution?.cristin_institution_id
+            ? getCristinInstitution(env.source.institution?.cristin_institution_id)
+            : undefined;
+        },
+      },
+      unit: {
+        type: GraphQLCristinUnit,
+        resolve: (env: GraphQLResolverEnvironment<CristinResultContributorAffiliation>): Unit | void => {
+          return env.source.unit?.cristin_unit_id ? getCristinUnit(env.source.unit?.cristin_unit_id) : undefined;
+        },
+      },
+    },
+  });
+
   const contributors = createObjectType(context, options, {
     name: context.uniqueName(`${GRAPHQL_OBJECT_NAME_CRISTIN_RESULT}_Contributors`),
     description: "A contributor to a Cristin Result",
     fields: {
+      id: {
+        type: GraphQLString,
+        resolve: (env: GraphQLResolverEnvironment<CristinResultContributor>): string | undefined =>
+          env.source.cristin_person_id,
+      },
       firstName: {
-        type: nonNull(GraphQLString),
+        type: GraphQLString,
+        resolve: (env: GraphQLResolverEnvironment<CristinResultContributor>): string | undefined =>
+          env.source.first_name,
       },
       surname: {
-        type: nonNull(GraphQLString),
+        type: GraphQLString,
+      },
+      order: {
+        type: GraphQLInt,
+      },
+      affiliations: {
+        type: list(affiliation),
+        resolve: (
+          env: GraphQLResolverEnvironment<CristinResultContributor>
+        ): Array<CristinResultContributorAffiliation> => forceArray(env.source.affiliations),
       },
     },
   });
@@ -91,13 +166,9 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
       },
       contributors: {
         type: list(contributors),
-        resolve: (env: GraphQLResolverEnvironment<Result>) =>
-          forceArray(env.source.contributors?.preview).map((person) => {
-            return {
-              firstName: person.first_name,
-              surname: person.surname,
-            };
-          }),
+        resolve: (env: GraphQLResolverEnvironment<Result>): ListOfResultContributors | void => {
+          return env.source.cristin_result_id ? getCristinResultContributors(env.source.cristin_result_id) : [];
+        },
       },
       created: {
         type: GraphQLString,

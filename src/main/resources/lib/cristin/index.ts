@@ -1,16 +1,38 @@
-import { lookupInstitution, lookupPerson, lookupProject, lookupUnit, lookupResult } from "/lib/cristin/storage";
+import {
+  lookupInstitution,
+  lookupPerson,
+  lookupProject,
+  lookupUnit,
+  lookupResult,
+  lookupResultContributors,
+} from "/lib/cristin/storage";
 import { saveToRepo } from "/lib/cristin/utils/repos";
-import { fetchInstitution, fetchPerson, fetchProject, fetchResult, fetchUnit } from "/lib/cristin/service";
+import {
+  fetchInstitution,
+  fetchPerson,
+  fetchProject,
+  fetchResult,
+  fetchResultContributors,
+  fetchUnit,
+} from "/lib/cristin/service";
 import {
   BRANCH_MASTER,
   REPO_CRISTIN_INSTITUTIONS,
   REPO_CRISTIN_PERSONS,
   REPO_CRISTIN_PROJECTS,
+  REPO_CRISTIN_RESULT_CONTRIBUTORS,
   REPO_CRISTIN_RESULTS,
   REPO_CRISTIN_UNITS,
 } from "/lib/cristin/constants";
 import { connect, type RepoConnection } from "/lib/xp/node";
-import type { Person, Institution, Project, Unit, Result } from "/lib/cristin/types/generated";
+import type {
+  Person,
+  Institution,
+  Project,
+  Unit,
+  Result,
+  ListOfResultContributors,
+} from "/lib/cristin/types/generated";
 import { notNullOrUndefined } from "/lib/cristin/utils";
 
 export function getCristinPersons(ids: Array<string>): Array<Person> {
@@ -36,6 +58,7 @@ export function getCristinPerson(id: string, repoConnection?: RepoConnection): P
       id,
       data: fetchPerson({ id }),
       connection,
+      repoId: REPO_CRISTIN_PERSONS,
     })
   );
 }
@@ -63,6 +86,7 @@ export function getCristinInstitution(id: string, repoConnection?: RepoConnectio
       id,
       data: fetchInstitution({ id }),
       connection,
+      repoId: REPO_CRISTIN_INSTITUTIONS,
     })
   );
 }
@@ -90,6 +114,7 @@ export function getCristinProject(id: string, repoConnection?: RepoConnection): 
       id,
       data: fetchProject({ id }),
       connection,
+      repoId: REPO_CRISTIN_PROJECTS,
     })
   );
 }
@@ -117,6 +142,7 @@ export function getCristinUnit(id: string, repoConnection?: RepoConnection): Uni
       id,
       data: fetchUnit({ id }),
       connection,
+      repoId: REPO_CRISTIN_UNITS,
     })
   );
 }
@@ -144,6 +170,29 @@ export function getCristinResult(id: string, repoConnection?: RepoConnection): R
       id,
       data: fetchResult({ id }),
       connection,
+      repoId: REPO_CRISTIN_RESULTS,
+    })
+  );
+}
+
+export function getCristinResultContributors(
+  id: string,
+  repoConnection?: RepoConnection
+): ListOfResultContributors | void {
+  const connection =
+    repoConnection ??
+    connect({
+      repoId: REPO_CRISTIN_RESULT_CONTRIBUTORS,
+      branch: BRANCH_MASTER,
+    });
+
+  return (
+    lookupResultContributors(id) ??
+    saveToRepo({
+      id,
+      data: fetchResultContributors({ id }),
+      connection,
+      repoId: REPO_CRISTIN_RESULT_CONTRIBUTORS,
     })
   );
 }

@@ -13,6 +13,7 @@ import type {
   ListOfUnits,
   Unit,
   Result,
+  ListOfResultContributors,
 } from "./types/generated";
 
 export interface FetchResponse<Data> {
@@ -146,6 +147,19 @@ export function fetchResult({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams)
   return parseResponse<Result>({
     res,
     errorMessage: "Could not get result from Cristin",
+  });
+}
+
+export function fetchResultContributors({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams): ListOfResultContributors {
+  const res = httpRequest({
+    url: `${URL_CRISTIN}/results/${id}/contributors`,
+    method: "GET",
+    params: { lang },
+  });
+
+  return parseResponse<ListOfResultContributors>({
+    res,
+    errorMessage: "Could not get result contributors from Cristin",
   });
 }
 
