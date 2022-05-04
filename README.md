@@ -23,7 +23,7 @@ dependencies {
   include "com.enonic.xp:lib-node:${xpVersion}"
   include "com.enonic.xp:lib-value:${xpVersion}"
   include "com.enonic.lib:lib-http-client:2.4.0"
-  include "no.item:lib-cristin:1.0.0"
+  include "no.item:lib-cristin:1.0.5"
 }
 ```
 

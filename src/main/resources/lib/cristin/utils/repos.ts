@@ -50,9 +50,8 @@ export function getNodeByDataId(connection: RepoConnection, ids: string | Array<
 
 export function getEntriesByName<NodeData>(repoId: string, name: Array<string>): Array<NodeData & RepoNode> {
   const connection = connect({ repoId, branch: BRANCH_MASTER });
-  return getNodeByDataId(connection, name)
-    .map((node) => node.id)
-    .map((id) => connection.get<NodeData>(id));
+  const res = getNodeByDataId(connection, name);
+  return forceArray(connection.get<NodeData>(res.map((node) => node.id)));
 }
 
 export function saveToRepo<NodeData>({ data, id, connection, repoId }: SaveToRepoParams<NodeData>): NodeData | void {

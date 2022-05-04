@@ -1,4 +1,4 @@
-import type { Person, Project, Result, Institution, Unit } from "./types/generated";
+import type { Person, Project, Result, Institution, Unit, ListOfResultContributors } from "./types/generated";
 import {
   REPO_CRISTIN_INSTITUTIONS,
   REPO_CRISTIN_PERSONS,
@@ -9,7 +9,6 @@ import {
 } from "/lib/cristin/constants";
 import { CristinNode, getEntriesByName } from "/lib/cristin/utils/repos";
 import { forceArray } from "/lib/cristin/utils";
-import { CristinResultContributor, ListOfResultContributors } from "./types/generated";
 
 export function lookupPerson(id: string): Person | undefined;
 export function lookupPerson(ids: Array<string>): Array<Person>;
@@ -62,6 +61,6 @@ export function lookupResultContributors(
   const entries = getEntriesByName<CristinNode<ListOfResultContributors>>(
     REPO_CRISTIN_RESULT_CONTRIBUTORS,
     forceArray(ids)
-  ).map((node) => node.data);
+  ).map((node) => forceArray(node.data));
   return Array.isArray(ids) ? entries : entries[0];
 }

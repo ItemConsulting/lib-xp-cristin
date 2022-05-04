@@ -7,16 +7,17 @@ import {
   type GraphQLResolverEnvironment,
   type GraphQLObjectType,
 } from "/lib/graphql";
-import { type Context } from "/lib/guillotine";
-import {
-  type CristinResultCategory,
+import type { Context } from "/lib/guillotine";
+import type {
+  CristinResultCategory,
   CristinResultContributor,
   CristinResultContributorAffiliation,
   CristinResultContributorAffiliationsRole,
-  type CristinResultJournal,
+  CristinResultJournal,
   Institution,
   ListOfResultContributors,
-  type Result,
+  Result,
+  Unit,
 } from "/lib/cristin/types/generated";
 import { getLocalized } from "/lib/cristin/utils/locale";
 import {
@@ -26,7 +27,6 @@ import {
 } from "/lib/cristin/graphql/constants";
 import { ContextOptions, createObjectType } from "/lib/cristin/graphql/graphql-utils";
 import { getCristinInstitution, getCristinResultContributors, getCristinUnit } from "/lib/cristin";
-import { Unit } from "*/lib/cristin";
 import { forceArray } from "/lib/cristin/utils";
 
 export function createObjectTypeCristinResult(context: Context, options?: ContextOptions): GraphQLObjectType {
