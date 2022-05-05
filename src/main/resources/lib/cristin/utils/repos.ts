@@ -83,6 +83,7 @@ function getCristinNodeCreateParams<NodeData>(id: string, data: NodeData): Crist
     },
     _inheritsPermissions: true,
     _name: id,
+    _parentPath: "/",
     data,
     topics: [],
   };
