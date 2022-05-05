@@ -33,6 +33,7 @@ export type CristinProjectCoordinatingInstitution = Project["coordinating_instit
 export type CristinProjectParticipant = Unarray<NonNullable<Project["participants"]>>;
 export type CristinProjectParticipantRole = Unarray<CristinProjectParticipant["roles"]>;
 export type CristinResultCategory = NonNullable<Result["category"]>;
+export type CristinResultLink = Unarray<NonNullable<Result["links"]>>;
 export interface CristinResultJournal {
   cristin_journal_id: string;
   name: string;

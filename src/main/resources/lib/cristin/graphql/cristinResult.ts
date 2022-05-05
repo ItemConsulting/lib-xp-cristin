@@ -28,6 +28,7 @@ import {
 import { ContextOptions, createObjectType } from "/lib/cristin/graphql/graphql-utils";
 import { getCristinInstitution, getCristinResultContributors, getCristinUnit } from "/lib/cristin";
 import { forceArray } from "/lib/cristin/utils";
+import { CristinResultLink } from "/lib/cristin/types/generated";
 
 export function createObjectTypeCristinResult(context: Context, options?: ContextOptions): GraphQLObjectType {
   const category = createObjectType(context, options, {
@@ -136,21 +137,41 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
     },
   });
 
+  const link = createObjectType(context, options, {
+    name: context.uniqueName(`${GRAPHQL_OBJECT_NAME_CRISTIN_RESULT}_Link`),
+    description: "An external url and type",
+    fields: {
+      urlType: {
+        type: nonNull(GraphQLString),
+        resolve: (env: GraphQLResolverEnvironment<CristinResultLink>) => env.source.url_type,
+      },
+      url: {
+        type: nonNull(GraphQLString),
+        resolve: (env: GraphQLResolverEnvironment<CristinResultLink>) => env.source.url,
+      },
+    },
+  });
+
   return createObjectType(context, options, {
     name: context.uniqueName(GRAPHQL_OBJECT_NAME_CRISTIN_RESULT),
     description: "A result from Cristin",
     fields: {
       id: {
         type: nonNull(GraphQLString),
-        resolve: (env: GraphQLResolverEnvironment<Result>) => env.source.cristin_result_id,
+        resolve: (env: GraphQLResolverEnvironment<Result>): string | undefined => env.source.cristin_result_id,
       },
       category: {
         type: category,
-        resolve: (env: GraphQLResolverEnvironment<Result>) => env.source.category,
+        resolve: (env: GraphQLResolverEnvironment<Result>): Result["category"] => env.source.category,
       },
       journal: {
         type: journal,
         resolve: (env: GraphQLResolverEnvironment<Result>) => env.source.journal,
+      },
+      links: {
+        type: list(link),
+        resolve: (env: GraphQLResolverEnvironment<Result>): NonNullable<Result["links"]> =>
+          forceArray(env.source.links),
       },
       title: {
         type: GraphQLString,
