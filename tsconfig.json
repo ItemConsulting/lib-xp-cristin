@@ -6,17 +6,27 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "target": "es5",
-    "allowJs": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
     "types": [
-      "enonic-types"
+      "enonic-types/controller",
+      "enonic-types/content",
+      "enonic-types/node",
+      "enonic-types/http",
+      "enonic-types/guillotine",
+      "enonic-types/graphql",
+      "enonic-types/value",
+      "enonic-types/repo",
+      "enonic-types/context",
+      "enonic-types/portal",
+      "enonic-types/auth"
     ],
     "baseUrl": "./src/main/resources",
     "paths": {
       "/lib/*": ["lib/*"]
     }
-  }
+  },
+  "exclude": ["./build/*"]
 }

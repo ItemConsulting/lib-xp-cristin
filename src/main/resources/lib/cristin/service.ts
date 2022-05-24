@@ -132,7 +132,7 @@ export function fetchResults(params: GetResultsParams): FetchResponse<ListOfResu
 
   return {
     count: data.length,
-    total: getTotalCountHeader(res) || data.length,
+    total: getTotalCountHeader(res) ?? data.length,
     data,
   };
 }
