@@ -1,6 +1,7 @@
 import {
   GraphQLString,
   GraphQLInt,
+  GraphQLID,
   Json,
   nonNull,
   list,
@@ -14,6 +15,8 @@ import type {
   CristinResultContributorAffiliation,
   CristinResultContributorAffiliationsRole,
   CristinResultJournal,
+  CristinResultLink,
+  CristinResultPublisher,
   Institution,
   ListOfResultContributors,
   Result,
@@ -28,7 +31,6 @@ import {
 import { ContextOptions, createObjectType } from "/lib/cristin/graphql/graphql-utils";
 import { getCristinInstitution, getCristinResultContributors, getCristinUnit } from "/lib/cristin";
 import { forceArray } from "/lib/cristin/utils";
-import { CristinResultLink } from "/lib/cristin/types/generated";
 
 export function createObjectTypeCristinResult(context: Context, options?: ContextOptions): GraphQLObjectType {
   const category = createObjectType(context, options, {
@@ -152,6 +154,30 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
     },
   });
 
+  const publisher = createObjectType(context, options, {
+    name: context.uniqueName(`${GRAPHQL_OBJECT_NAME_CRISTIN_RESULT}_Publisher`),
+    description: "A publisher",
+    fields: {
+      cristinPublisherId: {
+        type: GraphQLID,
+        resolve: (env: GraphQLResolverEnvironment<CristinResultPublisher>) => env.source.cristin_publisher_id,
+      },
+      name: {
+        type: GraphQLString,
+      },
+      place: {
+        type: GraphQLString,
+      },
+      url: {
+        type: GraphQLString,
+      },
+      nviLevel: {
+        type: GraphQLString,
+        resolve: (env: GraphQLResolverEnvironment<CristinResultPublisher>) => env.source.nvi_level,
+      },
+    },
+  });
+
   return createObjectType(context, options, {
     name: context.uniqueName(GRAPHQL_OBJECT_NAME_CRISTIN_RESULT),
     description: "A result from Cristin",
@@ -198,6 +224,22 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
       lastModified: {
         type: GraphQLString,
         resolve: (env: GraphQLResolverEnvironment<Result>) => env.source.last_modified?.date,
+      },
+      volume: {
+        type: GraphQLString,
+        resolve: (env: GraphQLResolverEnvironment<Result>) => env.source.volume,
+      },
+      issue: {
+        type: GraphQLString,
+        resolve: (env: GraphQLResolverEnvironment<Result>) => env.source.issue,
+      },
+      numberOfPages: {
+        type: GraphQLString,
+        resolve: (env: GraphQLResolverEnvironment<Result>) => env.source.number_of_pages,
+      },
+      publisher: {
+        type: publisher,
+        resolve: (env: GraphQLResolverEnvironment<Result>) => env.source.publisher,
       },
       dataAsJson: {
         type: Json,
