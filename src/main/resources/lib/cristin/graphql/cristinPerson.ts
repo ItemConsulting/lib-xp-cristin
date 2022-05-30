@@ -2,6 +2,7 @@ import { getCristinInstitution } from "/lib/cristin";
 import { GRAPHQL_OBJECT_NAME_CRISTIN_PERSON, GraphQLCristinInstitution } from "/lib/cristin/graphql/constants";
 import {
   GraphQLBoolean,
+  GraphQLID,
   GraphQLString,
   Json,
   list,
@@ -46,7 +47,7 @@ export function createObjectTypeCristinPerson(context: Context, options?: Contex
     description: "A person from Cristin",
     fields: {
       id: {
-        type: nonNull(GraphQLString),
+        type: nonNull(GraphQLID),
         resolve: (env: GraphQLResolverEnvironment<Person>) => env.source.cristin_person_id,
       },
       url: {

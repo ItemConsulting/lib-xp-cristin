@@ -1,5 +1,6 @@
 import {
   GraphQLBoolean,
+  GraphQLID,
   GraphQLString,
   Json,
   type GraphQLResolverEnvironment,
@@ -18,7 +19,7 @@ export function createObjectTypeCristinInstitution(context: Context, options?: C
     description: "An institution from Cristin",
     fields: {
       id: {
-        type: GraphQLString,
+        type: GraphQLID,
         resolve: (env: GraphQLResolverEnvironment<Institution>) => {
           return env.source.cristin_institution_id;
         },

@@ -1,4 +1,4 @@
-import { type GraphQLResolverEnvironment, type GraphQLObjectType, GraphQLString, Json } from "/lib/graphql";
+import { type GraphQLResolverEnvironment, type GraphQLObjectType, GraphQLString, GraphQLID, Json } from "/lib/graphql";
 import { type Context } from "/lib/guillotine";
 import { getCristinInstitution } from "/lib/cristin";
 import { type Unit } from "/lib/cristin/types/generated";
@@ -13,7 +13,7 @@ export function createObjectTypeCristinUnit(context: Context, options?: ContextO
     description: "A unit from Cristin",
     fields: {
       id: {
-        type: GraphQLString,
+        type: GraphQLID,
         resolve: (env: GraphQLResolverEnvironment<Unit>) => {
           return env.source.cristin_unit_id;
         },

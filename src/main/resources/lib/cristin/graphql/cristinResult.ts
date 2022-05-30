@@ -53,7 +53,7 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
     description: "A result from Cristin",
     fields: {
       journalId: {
-        type: GraphQLString,
+        type: GraphQLID,
         resolve: (env: GraphQLResolverEnvironment<CristinResultJournal>) => env.source.cristin_journal_id,
       },
       name: {
@@ -115,7 +115,7 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
     description: "A contributor to a Cristin Result",
     fields: {
       id: {
-        type: GraphQLString,
+        type: GraphQLID,
         resolve: (env: GraphQLResolverEnvironment<CristinResultContributor>): string | undefined =>
           env.source.cristin_person_id,
       },
@@ -183,7 +183,7 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
     description: "A result from Cristin",
     fields: {
       id: {
-        type: nonNull(GraphQLString),
+        type: nonNull(GraphQLID),
         resolve: (env: GraphQLResolverEnvironment<Result>): string | undefined => env.source.cristin_result_id,
       },
       category: {

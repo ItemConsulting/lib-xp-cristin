@@ -1,4 +1,5 @@
 import {
+  GraphQLID,
   GraphQLString,
   Json,
   nonNull,
@@ -107,7 +108,7 @@ export function createObjectTypeCristinProject(context: Context, options?: Conte
     description: "A project from Cristin",
     fields: {
       id: {
-        type: GraphQLString,
+        type: GraphQLID,
         resolve: (env: GraphQLResolverEnvironment<Project>) => env.source.cristin_project_id,
       },
       title: {
