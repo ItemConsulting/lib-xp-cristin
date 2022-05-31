@@ -7,7 +7,7 @@ import {
   REPO_CRISTIN_RESULTS,
   REPO_CRISTIN_UNITS,
 } from "/lib/cristin/constants";
-import { CristinNode, getEntriesByName } from "/lib/cristin/utils/repos";
+import { getEntriesByName, type CristinNode } from "/lib/cristin/utils/repos";
 import { forceArray } from "/lib/cristin/utils";
 
 export function lookupPerson(id: string): Person | undefined;
@@ -50,6 +50,7 @@ export function lookupResult(id: string): Result | undefined;
 export function lookupResult(ids: Array<string>): Array<Result>;
 export function lookupResult(ids: string | Array<string>): Result | Array<Result> | undefined {
   const entries = getEntriesByName<CristinNode<Result>>(REPO_CRISTIN_RESULTS, forceArray(ids)).map((node) => node.data);
+
   return Array.isArray(ids) ? entries : entries[0];
 }
 
@@ -62,5 +63,6 @@ export function lookupResultContributors(
     REPO_CRISTIN_RESULT_CONTRIBUTORS,
     forceArray(ids)
   ).map((node) => forceArray(node.data));
+
   return Array.isArray(ids) ? entries : entries[0];
 }

@@ -16,8 +16,6 @@ import {
   GraphQLCristinResult,
 } from "/lib/cristin/graphql/constants";
 import { getCristinUnit, getCristinPerson, getCristinInstitution, getCristinResult } from "/lib/cristin";
-import { REPO_CRISTIN_RESULTS } from "/lib/cristin/constants";
-import { connect } from "/lib/xp/node";
 import {
   CristinProjectCoordinatingInstitution,
   CristinProjectParticipant,
@@ -164,15 +162,10 @@ export function createObjectTypeCristinProject(context: Context, options?: Conte
 
       results: {
         type: list(GraphQLCristinResult),
-        resolve: (env: GraphQLResolverEnvironment<Project>) => {
-          const connection = connect({
-            repoId: REPO_CRISTIN_RESULTS,
-            branch: "master",
-          });
-          return forceArray(env.source.results)
+        resolve: (env: GraphQLResolverEnvironment<Project>) =>
+          forceArray(env.source.results)
             .map((url) => getLastSubstringAfter(url, "/"))
-            .map((id) => getCristinResult(id, connection));
-        },
+            .map((id) => getCristinResult(id)),
       },
 
       fundingSources: {
