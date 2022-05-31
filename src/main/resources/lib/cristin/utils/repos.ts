@@ -57,10 +57,12 @@ export function getEntriesByName<NodeData>(repoId: string, name: Array<string>):
 export function saveToRepo<NodeData>({ data, id, repoId }: SaveToRepoParams<NodeData>): NodeData | void {
   if (data) {
     try {
-      connectToRepoAsAdmin({
+      const connection = connectToRepoAsAdmin({
         repoId,
         branch: BRANCH_MASTER,
-      }).create(getCristinNodeCreateParams<NodeData>(id, data));
+      });
+      connection.create(getCristinNodeCreateParams<NodeData>(id, data));
+      connection.refresh("STORAGE");
     } catch (e) {
       log.error(`Could not create content in repo "${repoId}" with id: "${id}"`, e);
     }
