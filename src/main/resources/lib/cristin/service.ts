@@ -23,8 +23,10 @@ export interface FetchResponse<Data> {
 }
 
 export function fetchPersons(params: GetPersonsParams): FetchResponse<ListOfPersons> {
+  const url = `${URL_CRISTIN}/persons`;
+
   const res = httpRequest({
-    url: `${URL_CRISTIN}/persons`,
+    url,
     method: "GET",
     connectionTimeout: 30000,
     readTimeout: 30000,
@@ -36,6 +38,7 @@ export function fetchPersons(params: GetPersonsParams): FetchResponse<ListOfPers
 
   const data = parseResponse<ListOfPersons>({
     res,
+    url,
     errorMessage: `Could not get persons from Cristin`,
   });
 
@@ -47,14 +50,17 @@ export function fetchPersons(params: GetPersonsParams): FetchResponse<ListOfPers
 }
 
 export function fetchPerson({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams): Person {
+  const url = `${URL_CRISTIN}/persons/${id}`;
+
   const res = httpRequest({
-    url: `${URL_CRISTIN}/persons/${id}`,
+    url,
     method: "GET",
     params: { lang },
   });
 
   const person = parseResponse<Person>({
     res,
+    url,
     errorMessage: `Could not get a person with id=${id} from Cristin`,
   });
 
@@ -77,8 +83,10 @@ export function fetchPerson({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams)
 }
 
 export function fetchProjects(params: GetProjectsParams): FetchResponse<ListOfProjects> {
+  const url = `${URL_CRISTIN}/projects`;
+
   const res = httpRequest({
-    url: `${URL_CRISTIN}/projects`,
+    url: url,
     method: "GET",
     connectionTimeout: 30000,
     readTimeout: 30000,
@@ -90,6 +98,7 @@ export function fetchProjects(params: GetProjectsParams): FetchResponse<ListOfPr
 
   const data = parseResponse<ListOfProjects>({
     res,
+    url,
     errorMessage: "Could not get projects from Cristin",
   });
 
@@ -101,21 +110,24 @@ export function fetchProjects(params: GetProjectsParams): FetchResponse<ListOfPr
 }
 
 export function fetchProject({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams): Project {
+  const url = `${URL_CRISTIN}/projects/${id}`;
   const res = httpRequest({
-    url: `${URL_CRISTIN}/projects/${id}`,
+    url,
     method: "GET",
     params: { lang },
   });
 
   return parseResponse<Project>({
     res,
+    url,
     errorMessage: "Could not get project from Cristin",
   });
 }
 
 export function fetchResults(params: GetResultsParams): FetchResponse<ListOfResults> {
+  const url = `${URL_CRISTIN}/results`;
   const res = httpRequest({
-    url: `${URL_CRISTIN}/results`,
+    url,
     method: "GET",
     connectionTimeout: 30000,
     readTimeout: 30000,
@@ -127,6 +139,7 @@ export function fetchResults(params: GetResultsParams): FetchResponse<ListOfResu
 
   const data = parseResponse<ListOfResults>({
     res,
+    url,
     errorMessage: "Could not get results from Cristin",
   });
 
@@ -138,34 +151,39 @@ export function fetchResults(params: GetResultsParams): FetchResponse<ListOfResu
 }
 
 export function fetchResult({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams): Result {
+  const url = `${URL_CRISTIN}/results/${id}`;
   const res = httpRequest({
-    url: `${URL_CRISTIN}/results/${id}`,
+    url,
     method: "GET",
     params: { lang },
   });
 
   return parseResponse<Result>({
     res,
+    url,
     errorMessage: "Could not get result from Cristin",
   });
 }
 
 export function fetchResultContributors({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams): ListOfResultContributors {
+  const url = `${URL_CRISTIN}/results/${id}/contributors`;
   const res = httpRequest({
-    url: `${URL_CRISTIN}/results/${id}/contributors`,
+    url,
     method: "GET",
     params: { lang },
   });
 
   return parseResponse<ListOfResultContributors>({
     res,
+    url,
     errorMessage: "Could not get result contributors from Cristin",
   });
 }
 
 export function fetchInstitutions(params: GetInstitutionsParams): FetchResponse<ListOfInstitutions> {
+  const url = `${URL_CRISTIN}/institutions`;
   const res = httpRequest({
-    url: `${URL_CRISTIN}/institutions`,
+    url,
     method: "GET",
     connectionTimeout: 30000,
     readTimeout: 30000,
@@ -177,6 +195,7 @@ export function fetchInstitutions(params: GetInstitutionsParams): FetchResponse<
 
   const data = parseResponse<ListOfInstitutions>({
     res,
+    url,
     errorMessage: "Could not get institutions from Cristin",
   });
 
@@ -188,21 +207,24 @@ export function fetchInstitutions(params: GetInstitutionsParams): FetchResponse<
 }
 
 export function fetchInstitution({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams): Institution {
+  const url = `${URL_CRISTIN}/institutions/${id}`;
   const res = httpRequest({
-    url: `${URL_CRISTIN}/institutions/${id}`,
+    url,
     method: "GET",
     params: { lang },
   });
 
   return parseResponse<Institution>({
     res,
+    url,
     errorMessage: "Could not get project from Cristin",
   });
 }
 
 export function fetchResultCategories(params?: { lang?: string }): FetchResponse<Array<Result["category"]>> {
+  const url = `${URL_CRISTIN}/results/categories`;
   const res = httpRequest({
-    url: `${URL_CRISTIN}/results/categories`,
+    url,
     method: "GET",
     connectionTimeout: 30000,
     readTimeout: 30000,
@@ -213,6 +235,7 @@ export function fetchResultCategories(params?: { lang?: string }): FetchResponse
 
   const data = parseResponse<Array<Result["category"]>>({
     res,
+    url,
     errorMessage: "Could not get units from Cristin",
   });
 
@@ -224,8 +247,9 @@ export function fetchResultCategories(params?: { lang?: string }): FetchResponse
 }
 
 export function fetchUnits(params: GetUnitsParams): FetchResponse<ListOfUnits> {
+  const url = `${URL_CRISTIN}/units`;
   const res = httpRequest({
-    url: `${URL_CRISTIN}/units`,
+    url,
     method: "GET",
     connectionTimeout: 30000,
     readTimeout: 30000,
@@ -237,6 +261,7 @@ export function fetchUnits(params: GetUnitsParams): FetchResponse<ListOfUnits> {
 
   const data = parseResponse<ListOfUnits>({
     res,
+    url,
     errorMessage: "Could not get units from Cristin",
   });
 
@@ -248,14 +273,16 @@ export function fetchUnits(params: GetUnitsParams): FetchResponse<ListOfUnits> {
 }
 
 export function fetchUnit({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams): Unit {
+  const url = `${URL_CRISTIN}/units/${id}`;
   const res = httpRequest({
-    url: `${URL_CRISTIN}/units/${id}`,
+    url,
     method: "GET",
     params: { lang },
   });
 
   return parseResponse<Unit>({
     res,
+    url,
     errorMessage: "Could not get unit from Cristin",
   });
 }
