@@ -2,9 +2,9 @@
 
 Enonic XP Library for fetching a copy of data from Cristin, and storing it in a local repo.
 
-[![](https://jitpack.io/v/no.item/xp-lib-cristin.svg)](https://jitpack.io/#no.item/xp-lib-cristin)
+[![](https://jitpack.io/v/no.item/lib-xp-cristin.svg)](https://jitpack.io/#no.item/lib-xp-cristin)
 
-<img src="https://github.com/ItemConsulting/xp-lib-cristin/raw/main/docs/icon.svg?sanitize=true" width="150">
+<img src="https://github.com/ItemConsulting/lib-xp-cristin/raw/main/docs/icon.svg?sanitize=true" width="150">
 
 ## Installation
 
@@ -22,8 +22,8 @@ dependencies {
   include "com.enonic.xp:lib-repo:${xpVersion}"
   include "com.enonic.xp:lib-node:${xpVersion}"
   include "com.enonic.xp:lib-value:${xpVersion}"
-  include "com.enonic.lib:lib-http-client:2.4.0"
-  include "no.item:lib-cristin:1.0.5"
+  include "com.enonic.lib:lib-http-client:3.0.1"
+  include "no.item:lib-cristin:1.0.10"
 }
 ```
 
@@ -70,4 +70,4 @@ Deploy locally for testing purposes:
 
 ## Deploy to Jitpack
 
-Go to the [Jitpack page for xp-lib-cristin](https://jitpack.io/#no.item/xp-lib-cristin) to deploy from Github.
+Go to the [Jitpack page for lib-xp-cristin](https://jitpack.io/#no.item/lib-xp-cristin) to deploy from Github.
