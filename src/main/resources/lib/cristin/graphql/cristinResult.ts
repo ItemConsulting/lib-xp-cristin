@@ -201,11 +201,13 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
       },
       title: {
         type: GraphQLString,
-        resolve: (env: GraphQLResolverEnvironment<Result>) => getLocalized(env, env.source.title),
+        resolve: (env: GraphQLResolverEnvironment<Result>) =>
+          getLocalized(env, env.source.title, env.source.original_language),
       },
       summary: {
         type: GraphQLString,
-        resolve: (env: GraphQLResolverEnvironment<Result>) => getLocalized(env, env.source.summary),
+        resolve: (env: GraphQLResolverEnvironment<Result>) =>
+          getLocalized(env, env.source.summary, env.source.original_language),
       },
       yearPublished: {
         type: GraphQLString,
