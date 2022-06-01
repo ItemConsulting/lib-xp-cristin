@@ -62,7 +62,7 @@ export function saveToRepo<NodeData>({ data, id, repoId }: SaveToRepoParams<Node
         branch: BRANCH_MASTER,
       });
       connection.create(getCristinNodeCreateParams<NodeData>(id, data));
-      connection.refresh("STORAGE");
+      connection.refresh("ALL");
     } catch (e) {
       log.error(`Could not create content in repo "${repoId}" with id: "${id}"`, e);
     }
