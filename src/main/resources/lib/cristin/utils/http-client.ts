@@ -9,7 +9,6 @@ export function parseResponse<T>({ res, errorMessage, url }: ParseResponseParams
     if (res.body) {
       log.warning(res.body);
     }
-    log.error(message);
 
     throw new Error(message);
   }

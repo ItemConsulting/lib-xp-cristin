@@ -22,7 +22,7 @@ import {
   CristinProjectParticipantRole,
   Project,
 } from "/lib/cristin/types/generated";
-import { forceArray, getLastSubstringAfter } from "/lib/cristin/utils";
+import { forceArray, getLastSubstringAfter, notNullOrUndefined } from "/lib/cristin/utils";
 import { getLocalized } from "/lib/cristin/utils/locale";
 import { ContextOptions, createObjectType } from "/lib/cristin/graphql/graphql-utils";
 
@@ -78,9 +78,8 @@ export function createObjectTypeCristinProject(context: Context, options?: Conte
       },
       person: {
         type: GraphQLCristinPerson,
-        resolve: (env: GraphQLResolverEnvironment<CristinProjectParticipant>) => {
-          return env.source.cristin_person_id ? getCristinPerson(env.source.cristin_person_id) : undefined;
-        },
+        resolve: (env: GraphQLResolverEnvironment<CristinProjectParticipant>) =>
+          env.source.cristin_person_id ? getCristinPerson(env.source.cristin_person_id) : undefined,
       },
       firstName: {
         type: GraphQLString,
@@ -165,6 +164,7 @@ export function createObjectTypeCristinProject(context: Context, options?: Conte
         resolve: (env: GraphQLResolverEnvironment<Project>) =>
           forceArray(env.source.results)
             .map((url) => getLastSubstringAfter(url, "/"))
+            .filter(notNullOrUndefined)
             .map((id) => getCristinResult(id)),
       },
 
@@ -183,12 +183,11 @@ export function createObjectTypeCristinProject(context: Context, options?: Conte
             },
           })
         ),
-        resolve: (env: GraphQLResolverEnvironment<Project>) => {
-          return forceArray(env.source.project_funding_sources).map((fundingSource) => ({
+        resolve: (env: GraphQLResolverEnvironment<Project>) =>
+          forceArray(env.source.project_funding_sources).map((fundingSource) => ({
             code: fundingSource.funding_source_code,
             name: getLocalized(env, fundingSource.funding_source_name),
-          }));
-        },
+          })),
       },
 
       dataAsJson: {
