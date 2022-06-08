@@ -10,7 +10,7 @@ dependencies {
   compileOnly "com.enonic.xp:lib-node:${xpVersion}"
   compileOnly "com.enonic.xp:lib-portal:${xpVersion}"
   compileOnly "com.enonic.xp:lib-value:${xpVersion}"
-  compileOnly "com.enonic.lib:lib-http-client:3.0.1"
+  compileOnly "com.enonic.lib:lib-http-client:3.1.0"
 }
 
 repositories {
