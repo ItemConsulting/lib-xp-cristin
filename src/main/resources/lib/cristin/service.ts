@@ -165,6 +165,24 @@ export function fetchResult({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams)
   });
 }
 
+export function fetchPersonResults({ id, ...params }: GetPersonResultsParams): ListOfResults {
+  const url = `https://api.cristin.no/v2/persons/${id}/results`;
+  const res = httpRequest({
+    url,
+    method: "GET",
+    params: {
+      lang: LANG_PARAMS_DEFAULT,
+      ...params,
+    },
+  });
+
+  return parseResponse<ListOfResults>({
+    res,
+    url,
+    errorMessage: `Could not get list of results for person ${id} from Cristin`,
+  });
+}
+
 export function fetchResultContributors({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams): ListOfResultContributors {
   const url = `${URL_CRISTIN}/results/${id}/contributors`;
   const res = httpRequest({
@@ -358,6 +376,13 @@ export interface GetResultsParams {
   per_page?: string;
   sort?: string;
   fields?: "all";
+}
+
+export interface GetPersonResultsParams {
+  id?: string;
+  lang?: string;
+  page?: string;
+  per_page?: string;
 }
 
 export interface GetInstitutionsParams {

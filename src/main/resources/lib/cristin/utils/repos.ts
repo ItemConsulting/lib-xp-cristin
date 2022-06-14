@@ -48,9 +48,9 @@ export function getNodeByDataId(connection: RepoConnection, ids: string | Array<
   }).hits;
 }
 
-export function getEntriesByName<NodeData>(repoId: string, name: Array<string>): Array<NodeData & RepoNode> {
+export function getEntriesByName<NodeData>(repoId: string, names: Array<string>): Array<NodeData & RepoNode> {
   const connection = connect({ repoId, branch: BRANCH_MASTER });
-  const res = getNodeByDataId(connection, name);
+  const res = getNodeByDataId(connection, names);
   return forceArray(connection.get<NodeData>(res.map((node) => node.id)));
 }
 
