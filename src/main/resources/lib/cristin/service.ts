@@ -1,7 +1,12 @@
 import { type HttpResponse, request as httpRequest } from "/lib/http-client";
 import { binary } from "/lib/xp/value";
 import { parseResponse } from "/lib/cristin/utils/http-client";
-import { BINARY_REFERENCE_PICTURE, URL_CRISTIN, LANG_PARAMS_DEFAULT } from "/lib/cristin/constants";
+import {
+  BINARY_REFERENCE_PICTURE,
+  URL_CRISTIN,
+  DEFAULT_PARAMS_LANG,
+  DEFAULT_PARAMS_PER_PAGE,
+} from "/lib/cristin/constants";
 import type {
   ListOfPersons,
   Person,
@@ -31,7 +36,8 @@ export function fetchPersons(params: GetPersonsParams): FetchResponse<ListOfPers
     connectionTimeout: 30000,
     readTimeout: 30000,
     params: {
-      lang: LANG_PARAMS_DEFAULT,
+      lang: DEFAULT_PARAMS_LANG,
+      per_page: DEFAULT_PARAMS_PER_PAGE,
       ...params,
     },
   });
@@ -49,7 +55,7 @@ export function fetchPersons(params: GetPersonsParams): FetchResponse<ListOfPers
   };
 }
 
-export function fetchPerson({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams): Person {
+export function fetchPerson({ id, lang = DEFAULT_PARAMS_LANG }: GetSingleParams): Person {
   const url = `${URL_CRISTIN}/persons/${id}`;
 
   const res = httpRequest({
@@ -91,7 +97,8 @@ export function fetchProjects(params: GetProjectsParams): FetchResponse<ListOfPr
     connectionTimeout: 30000,
     readTimeout: 30000,
     params: {
-      lang: LANG_PARAMS_DEFAULT,
+      lang: DEFAULT_PARAMS_LANG,
+      per_page: DEFAULT_PARAMS_PER_PAGE,
       ...params,
     },
   });
@@ -109,7 +116,7 @@ export function fetchProjects(params: GetProjectsParams): FetchResponse<ListOfPr
   };
 }
 
-export function fetchProject({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams): Project {
+export function fetchProject({ id, lang = DEFAULT_PARAMS_LANG }: GetSingleParams): Project {
   const url = `${URL_CRISTIN}/projects/${id}`;
   const res = httpRequest({
     url,
@@ -132,7 +139,8 @@ export function fetchResults(params: GetResultsParams): FetchResponse<ListOfResu
     connectionTimeout: 30000,
     readTimeout: 30000,
     params: {
-      lang: LANG_PARAMS_DEFAULT,
+      lang: DEFAULT_PARAMS_LANG,
+      per_page: DEFAULT_PARAMS_PER_PAGE,
       ...params,
     },
   });
@@ -150,7 +158,7 @@ export function fetchResults(params: GetResultsParams): FetchResponse<ListOfResu
   };
 }
 
-export function fetchResult({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams): Result {
+export function fetchResult({ id, lang = DEFAULT_PARAMS_LANG }: GetSingleParams): Result {
   const url = `${URL_CRISTIN}/results/${id}`;
   const res = httpRequest({
     url,
@@ -171,7 +179,8 @@ export function fetchPersonResults({ id, ...params }: GetPersonResultsParams): L
     url,
     method: "GET",
     params: {
-      lang: LANG_PARAMS_DEFAULT,
+      lang: DEFAULT_PARAMS_LANG,
+      per_page: DEFAULT_PARAMS_PER_PAGE,
       ...params,
     },
   });
@@ -183,7 +192,7 @@ export function fetchPersonResults({ id, ...params }: GetPersonResultsParams): L
   });
 }
 
-export function fetchResultContributors({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams): ListOfResultContributors {
+export function fetchResultContributors({ id, lang = DEFAULT_PARAMS_LANG }: GetSingleParams): ListOfResultContributors {
   const url = `${URL_CRISTIN}/results/${id}/contributors`;
   const res = httpRequest({
     url,
@@ -206,7 +215,8 @@ export function fetchInstitutions(params: GetInstitutionsParams): FetchResponse<
     connectionTimeout: 30000,
     readTimeout: 30000,
     params: {
-      lang: LANG_PARAMS_DEFAULT,
+      lang: DEFAULT_PARAMS_LANG,
+      per_page: DEFAULT_PARAMS_PER_PAGE,
       ...params,
     },
   });
@@ -224,7 +234,7 @@ export function fetchInstitutions(params: GetInstitutionsParams): FetchResponse<
   };
 }
 
-export function fetchInstitution({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams): Institution {
+export function fetchInstitution({ id, lang = DEFAULT_PARAMS_LANG }: GetSingleParams): Institution {
   const url = `${URL_CRISTIN}/institutions/${id}`;
   const res = httpRequest({
     url,
@@ -247,7 +257,7 @@ export function fetchResultCategories(params?: { lang?: string }): FetchResponse
     connectionTimeout: 30000,
     readTimeout: 30000,
     params: {
-      lang: params?.lang ?? LANG_PARAMS_DEFAULT,
+      lang: params?.lang ?? DEFAULT_PARAMS_LANG,
     },
   });
 
@@ -272,7 +282,8 @@ export function fetchUnits(params: GetUnitsParams): FetchResponse<ListOfUnits> {
     connectionTimeout: 30000,
     readTimeout: 30000,
     params: {
-      lang: LANG_PARAMS_DEFAULT,
+      lang: DEFAULT_PARAMS_LANG,
+      per_page: DEFAULT_PARAMS_PER_PAGE,
       ...params,
     },
   });
@@ -290,7 +301,7 @@ export function fetchUnits(params: GetUnitsParams): FetchResponse<ListOfUnits> {
   };
 }
 
-export function fetchUnit({ id, lang = LANG_PARAMS_DEFAULT }: GetSingleParams): Unit {
+export function fetchUnit({ id, lang = DEFAULT_PARAMS_LANG }: GetSingleParams): Unit {
   const url = `${URL_CRISTIN}/units/${id}`;
   const res = httpRequest({
     url,
