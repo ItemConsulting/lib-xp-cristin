@@ -2,7 +2,7 @@ plugins {
   id 'java'
   id 'maven-publish'
   id 'com.enonic.xp.base' version '3.1.0'
-  id "com.github.node-gradle.node" version '3.1.1'
+  id "com.github.node-gradle.node" version '3.4.0'
 }
 
 dependencies {
@@ -21,7 +21,7 @@ repositories {
 
 node {
   download = true
-  version = '16.0.0'
+  version = '17.4.0'
 }
 
 task npmInstallForce(type: NpmTask) {

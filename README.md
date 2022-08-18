@@ -166,7 +166,7 @@ var schema = guillotineLib.createSchema({
       context.addDictionaryType(cristinGraphqlLib.createObjectTypeCristinPerson(context));
       
       params.fields.cristinProfile = {
-        // Use the reference type (`GraphQLCristinPerson = reference("no_item_cristin_Person")`)
+        // Use the reference type (`reference("no_item_cristin_Person")`)
         type: cristinGraphqlLib.GraphQLCristinPerson,
         resolve: function(env) {
           return cristinLib.getCristinPerson(env.source.cristinProfileId);
