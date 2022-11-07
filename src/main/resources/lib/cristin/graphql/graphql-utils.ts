@@ -1,5 +1,5 @@
 import { type CreateObjectTypeParams, type GraphQLObjectType } from "/lib/graphql";
-import { type Context, type EmptyObject } from "/lib/guillotine";
+import { type Context } from "/lib/guillotine";
 
 export function createObjectType(
   context: Context,
@@ -13,9 +13,6 @@ export function createObjectType(
   return context.schemaGenerator.createObjectType(createParams);
 }
 
-export interface ContextOptions<ExecuteContext = EmptyObject> {
-  creationCallbacks: Record<
-    string,
-    (context: Context<ExecuteContext>, params: import("/lib/graphql").CreateObjectTypeParams<ExecuteContext>) => void
-  >;
+export interface ContextOptions {
+  creationCallbacks: Record<string, (context: Context, params: CreateObjectTypeParams) => void>;
 }

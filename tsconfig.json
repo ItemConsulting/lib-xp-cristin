@@ -10,22 +10,10 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
-    "types": [
-      "enonic-types/controller",
-      "enonic-types/content",
-      "enonic-types/node",
-      "enonic-types/http",
-      "enonic-types/guillotine",
-      "enonic-types/graphql",
-      "enonic-types/value",
-      "enonic-types/repo",
-      "enonic-types/context",
-      "enonic-types/portal",
-      "enonic-types/auth"
-    ],
-    "baseUrl": "./src/main/resources",
+    "baseUrl": "./",
     "paths": {
-      "/lib/*": ["lib/*"]
+      "/lib/xp/*": ["./node_modules/@enonic-types/lib-*"],
+      "/lib/*": [ "./node_modules/@item-enonic-types/lib-*" ,"./src/main/resources/lib/*"],
     }
   },
   "exclude": ["./build/*"]

@@ -1,4 +1,4 @@
-import type { PermissionsParams } from "/lib/xp/content";
+import type { AccessControlEntry } from "/lib/xp/content";
 
 export const REPO_CRISTIN_INSTITUTIONS = "no.item.cristin.institutions";
 export const REPO_CRISTIN_PERSONS = "no.item.cristin.persons";
@@ -12,7 +12,7 @@ export const BINARY_REFERENCE_PICTURE = "picture";
 export const DEFAULT_PARAMS_LANG = "en,nb";
 export const DEFAULT_PARAMS_PER_PAGE = "10000";
 
-export const DEFAULT_PERMISSIONS: Array<PermissionsParams> = [
+export const DEFAULT_PERMISSIONS: Array<AccessControlEntry> = [
   {
     principal: "role:system.everyone",
     allow: ["READ"],

@@ -1,7 +1,7 @@
 import { get as getRepo, create as createRepo } from "/lib/xp/repo";
-import { connect, type RepoConnection, type NodeQueryHit, type NodeCreateParams, type RepoNode } from "/lib/xp/node";
+import { connect, type RepoConnection, type NodeQueryResultHit, type CreateNodeParams, type Node } from "/lib/xp/node";
 import { BRANCH_MASTER, DEFAULT_PERMISSIONS } from "/lib/cristin/constants";
-import { forceArray } from "/lib/cristin/utils";
+import { forceArray, notNullOrUndefined } from "/lib/cristin/utils";
 import { connectToRepoAsAdmin } from "/lib/cristin/utils/contexts";
 
 export interface CristinNode<Data> {
@@ -25,7 +25,10 @@ export function ensureRepoExist(repoName: string): boolean {
   return repoExisted;
 }
 
-export function getNodeByDataId(connection: RepoConnection, ids: string | Array<string>): ReadonlyArray<NodeQueryHit> {
+export function getNodeByDataId(
+  connection: RepoConnection,
+  ids: string | Array<string>
+): ReadonlyArray<NodeQueryResultHit> {
   const values = forceArray(ids);
 
   return connection.query({
@@ -48,10 +51,12 @@ export function getNodeByDataId(connection: RepoConnection, ids: string | Array<
   }).hits;
 }
 
-export function getEntriesByName<NodeData>(repoId: string, names: Array<string>): Array<NodeData & RepoNode> {
+export function getEntriesByName<NodeData>(repoId: string, names: Array<string>): Array<Node<NodeData>> {
   const connection = connect({ repoId, branch: BRANCH_MASTER });
   const res = getNodeByDataId(connection, names);
-  return forceArray(connection.get<NodeData>(res.map((node) => node.id)));
+  const ids = res.map((node) => node.id);
+
+  return forceArray(connection.get<NodeData>(ids)).filter(notNullOrUndefined);
 }
 
 export function saveToRepo<NodeData>({ data, id, repoId }: SaveToRepoParams<NodeData>): NodeData | void {
@@ -71,11 +76,11 @@ export function saveToRepo<NodeData>({ data, id, repoId }: SaveToRepoParams<Node
   }
 }
 
-function getCristinNodeCreateParams<NodeData>(id: string, data: NodeData): CristinNode<NodeData> & NodeCreateParams {
+function getCristinNodeCreateParams<NodeData>(id: string, data: NodeData): CristinNode<NodeData> & CreateNodeParams {
   return {
-    _indexConfig: {
-      default: "fulltext",
-    },
+    // _indexConfig: {
+    //   default: "fulltext",
+    // },
     _inheritsPermissions: true,
     _name: id,
     _parentPath: "/",

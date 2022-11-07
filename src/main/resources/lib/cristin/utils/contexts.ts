@@ -1,7 +1,7 @@
 import { run } from "/lib/xp/context";
-import { connect, type RepoConnection, type Source } from "/lib/xp/node";
+import { connect, type RepoConnection, type ConnectParams } from "/lib/xp/node";
 
-export function connectToRepoAsAdmin(source: Source): RepoConnection {
+export function connectToRepoAsAdmin(source: ConnectParams): RepoConnection {
   return run(
     {
       repository: source.repoId,

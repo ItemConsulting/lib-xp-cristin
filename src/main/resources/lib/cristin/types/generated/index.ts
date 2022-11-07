@@ -1,4 +1,4 @@
-import { type Unarray } from "enonic-types/types";
+export type Unarray<T> = T extends Array<infer U> ? U : T extends ReadonlyArray<infer U> ? U : T;
 
 export type ListOfPersons = import("./personsList_GET_response").ListOfPersons;
 export type Person = import("./persons_GET_POST_response").Person;
