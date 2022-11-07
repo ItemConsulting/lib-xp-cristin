@@ -23,14 +23,32 @@ import {
   REPO_CRISTIN_RESULTS,
   REPO_CRISTIN_UNITS,
 } from "/lib/cristin/constants";
-import type {
+import type { Person, Institution, Project, Unit, Result, ListOfResultContributors } from "./types/generated";
+export type {
+  Unarray,
+  ListOfPersons,
   Person,
-  Institution,
+  ListOfProjects,
   Project,
-  Unit,
+  ListOfResults,
   Result,
   ListOfResultContributors,
-} from "/lib/cristin/types/generated";
+  ListOfInstitutions,
+  Institution,
+  ListOfUnits,
+  Unit,
+  CristinResultContributor,
+  CristinResultContributorAffiliation,
+  CristinResultContributorAffiliationsRole,
+  CristinPersonAffiliation,
+  CristinProjectCoordinatingInstitution,
+  CristinProjectParticipant,
+  CristinProjectParticipantRole,
+  CristinResultCategory,
+  CristinResultPublisher,
+  CristinResultLink,
+  CristinResultJournal,
+} from "./types/generated";
 import { notNullOrUndefined } from "/lib/cristin/utils";
 
 export function getCristinPersons(ids: Array<string>): Array<Person> {
