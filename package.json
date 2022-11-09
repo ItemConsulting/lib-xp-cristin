@@ -1,6 +1,6 @@
 {
   "name": "@item-enonic-types/lib-cristin",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Library for retrieving and storing data from Cristin",
   "license": "MIT",
   "files": [
