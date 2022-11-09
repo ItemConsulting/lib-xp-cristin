@@ -1,5 +1,5 @@
-import { type CreateObjectTypeParams, type GraphQLObjectType } from "/lib/graphql";
-import { type Context } from "/lib/guillotine";
+import type { CreateObjectTypeParams, GraphQLObjectType } from "/lib/graphql";
+import type { Context, ContextCreationCallbacks } from "/lib/guillotine";
 
 export function createObjectType(
   context: Context,
@@ -14,5 +14,5 @@ export function createObjectType(
 }
 
 export interface ContextOptions {
-  creationCallbacks: Record<string, (context: Context, params: CreateObjectTypeParams) => void>;
+  creationCallbacks: ContextCreationCallbacks;
 }

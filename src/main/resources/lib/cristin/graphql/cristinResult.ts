@@ -28,9 +28,10 @@ import {
   GraphQLCristinInstitution,
   GraphQLCristinUnit,
 } from "/lib/cristin/graphql/constants";
-import { ContextOptions, createObjectType } from "/lib/cristin/graphql/graphql-utils";
+import { createObjectType, type ContextOptions } from "/lib/cristin/graphql/graphql-utils";
 import { getCristinInstitution, getCristinResultContributors, getCristinUnit } from "/lib/cristin";
 import { forceArray } from "/lib/cristin/utils";
+import { CristinResultSeries } from "/lib/cristin/types/generated";
 
 export function createObjectTypeCristinResult(context: Context, options?: ContextOptions): GraphQLObjectType {
   const category = createObjectType(context, options, {
@@ -178,6 +179,20 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
     },
   });
 
+  const series = createObjectType(context, options, {
+    name: context.uniqueName(`${GRAPHQL_OBJECT_NAME_CRISTIN_RESULT}_Series`),
+    description: "A series",
+    fields: {
+      cristinJournalId: {
+        type: GraphQLString,
+        resolve: (env: GraphQLResolverEnvironment<CristinResultSeries>) => env.source.cristin_journal_id,
+      },
+      name: {
+        type: GraphQLString,
+      },
+    },
+  });
+
   return createObjectType(context, options, {
     name: context.uniqueName(GRAPHQL_OBJECT_NAME_CRISTIN_RESULT),
     description: "A result from Cristin",
@@ -242,6 +257,10 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
       publisher: {
         type: publisher,
         resolve: (env: GraphQLResolverEnvironment<Result>) => env.source.publisher,
+      },
+      series: {
+        type: series,
+        resolve: (env: GraphQLResolverEnvironment<Result>) => env.source.series,
       },
       dataAsJson: {
         type: Json,

@@ -47,6 +47,7 @@ export type {
   CristinResultCategory,
   CristinResultPublisher,
   CristinResultLink,
+  CristinResultSeries,
   CristinResultJournal,
 } from "./types/generated";
 import { notNullOrUndefined } from "/lib/cristin/utils";

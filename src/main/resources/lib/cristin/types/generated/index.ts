@@ -35,6 +35,10 @@ export type CristinProjectParticipantRole = Unarray<CristinProjectParticipant["r
 export type CristinResultCategory = NonNullable<Result["category"]>;
 export type CristinResultPublisher = import("./results_GET_response").Publisher;
 export type CristinResultLink = Unarray<NonNullable<Result["links"]>>;
+export interface CristinResultSeries {
+  cristin_journal_id?: string;
+  name?: string;
+}
 export interface CristinResultJournal {
   cristin_journal_id: string;
   name: string;
