@@ -1,6 +1,6 @@
 {
   "name": "@item-enonic-types/lib-cristin",
-  "version": "1.0.18",
+  "version": "1.1.0",
   "description": "Library for retrieving and storing data from Cristin",
   "license": "MIT",
   "files": [
@@ -20,39 +20,29 @@
     "postpublish": "rm ./*.d.ts && rm -r ./types && rm -r ./utils && rm -r ./graphql"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.2",
+    "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
     "@babel/register": "^7.18.9",
-    "@typescript-eslint/eslint-plugin": "^5.42.1",
-    "@typescript-eslint/parser": "^5.42.1",
-    "babel-loader": "^9.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "babel-loader": "^9.1.2",
     "browserslist-config-enonic": "^1.0.7",
     "cross-env": "^7.0.3",
-    "eslint": "^8.27.0",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint": "^8.32.0",
+    "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
     "file-loader": "^6.2.0",
-    "glob": "^8.0.3",
-    "json-schema-to-typescript": "^11.0.2",
-    "prettier": "^2.7.1",
+    "glob": "^8.1.0",
+    "json-schema-to-typescript": "^11.0.3",
+    "prettier": "^2.8.3",
     "ramda": "^0.28.0",
-    "ts-loader": "^9.4.1",
-    "typescript": "^4.8.4",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0"
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.4",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "dependencies": {
-    "@enonic-types/lib-auth": "^7.11.0",
-    "@enonic-types/lib-content": "^7.11.0",
-    "@enonic-types/lib-context": "^7.11.0",
-    "@enonic-types/lib-node": "^7.11.0",
-    "@enonic-types/lib-portal": "^7.11.0",
-    "@enonic-types/lib-repo": "^7.11.0",
-    "@enonic-types/lib-value": "^7.11.0",
-    "@item-enonic-types/global": "^7.11.0",
-    "@item-enonic-types/lib-http-client": "^3.1.0",
-    "@item-enonic-types/lib-graphql": "^2.0.2",
-    "@item-enonic-types/lib-guillotine": "^5.5.0"
+    "enonic-types": "^7.11.3"
   },
   "browserslist": [
     "extends browserslist-config-enonic"

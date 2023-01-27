@@ -44,7 +44,11 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
       },
       category: {
         type: GraphQLString,
-        resolve: (env: GraphQLResolverEnvironment<CristinResultCategory>) => getLocalized(env, env.source.name),
+        resolve: (env: GraphQLResolverEnvironment<CristinResultCategory>) =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.name,
+          })[0],
       },
     },
   });
@@ -79,7 +83,10 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
       name: {
         type: GraphQLString,
         resolve: (env: GraphQLResolverEnvironment<CristinResultContributorAffiliationsRole>): string | undefined =>
-          getLocalized(env, env.source.name),
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.name,
+          })[0],
       },
     },
   });
@@ -216,13 +223,39 @@ export function createObjectTypeCristinResult(context: Context, options?: Contex
       },
       title: {
         type: GraphQLString,
-        resolve: (env: GraphQLResolverEnvironment<Result>) =>
-          getLocalized(env, env.source.title, env.source.original_language),
+        resolve: (env: GraphQLResolverEnvironment<Result>): string | undefined =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.title,
+            originalLanguage: env.source.original_language,
+          })[0],
+      },
+      titleLang: {
+        type: GraphQLString,
+        resolve: (env: GraphQLResolverEnvironment<Result>): string =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.title,
+            originalLanguage: env.source.original_language,
+          })[1],
       },
       summary: {
         type: GraphQLString,
         resolve: (env: GraphQLResolverEnvironment<Result>) =>
-          getLocalized(env, env.source.summary, env.source.original_language),
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.summary,
+            originalLanguage: env.source.original_language,
+          })[0],
+      },
+      summaryLang: {
+        type: GraphQLString,
+        resolve: (env: GraphQLResolverEnvironment<Result>) =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.summary,
+            originalLanguage: env.source.original_language,
+          })[1],
       },
       yearPublished: {
         type: GraphQLString,
@@ -279,7 +312,11 @@ export function createObjectTypeCristinResultCategory(context: Context, options?
       },
       name: {
         type: nonNull(GraphQLString),
-        resolve: (env: GraphQLResolverEnvironment<CristinResultCategory>) => getLocalized(env, env.source.name),
+        resolve: (env: GraphQLResolverEnvironment<CristinResultCategory>) =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.name,
+          })[0],
       },
     },
   });

@@ -20,6 +20,7 @@ import type {
   Result,
   ListOfResultContributors,
 } from "./types/generated";
+import { ByteSource } from "@enonic-types/core";
 
 export interface FetchResponse<Data> {
   count: number;
@@ -78,7 +79,7 @@ export function fetchPerson({ id, lang = DEFAULT_PARAMS_LANG }: GetSingleParams)
       });
 
       if (pictureRes.status === 200) {
-        person.attachment = binary(BINARY_REFERENCE_PICTURE, pictureRes.bodyStream);
+        person.attachment = binary(BINARY_REFERENCE_PICTURE, pictureRes.bodyStream as unknown as ByteSource);
       }
     }
   } catch (e) {

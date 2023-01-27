@@ -110,7 +110,11 @@ export function createObjectTypeCristinProject(context: Context, options?: Conte
       },
       title: {
         type: GraphQLString,
-        resolve: (env: GraphQLResolverEnvironment<Project>) => getLocalized(env, env.source.title),
+        resolve: (env: GraphQLResolverEnvironment<Project>) =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.title,
+          })[0],
       },
 
       startDate: {
@@ -151,12 +155,38 @@ export function createObjectTypeCristinProject(context: Context, options?: Conte
 
       academicSummary: {
         type: GraphQLString,
-        resolve: (env: GraphQLResolverEnvironment<Project>) => getLocalized(env, env.source.academic_summary),
+        resolve: (env: GraphQLResolverEnvironment<Project>): string | undefined =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.academic_summary,
+          })[0],
+      },
+
+      academicSummaryLang: {
+        type: GraphQLString,
+        resolve: (env: GraphQLResolverEnvironment<Project>): string =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.academic_summary,
+          })[1],
       },
 
       method: {
         type: GraphQLString,
-        resolve: (env: GraphQLResolverEnvironment<Project>) => getLocalized(env, env.source.method),
+        resolve: (env: GraphQLResolverEnvironment<Project>): string | undefined =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.method,
+          })[0],
+      },
+
+      methodLang: {
+        type: GraphQLString,
+        resolve: (env: GraphQLResolverEnvironment<Project>): string | undefined =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.method,
+          })[1],
       },
 
       results: {
@@ -186,7 +216,10 @@ export function createObjectTypeCristinProject(context: Context, options?: Conte
         resolve: (env: GraphQLResolverEnvironment<Project>) =>
           forceArray(env.source.project_funding_sources).map((fundingSource) => ({
             code: fundingSource.funding_source_code,
-            name: getLocalized(env, fundingSource.funding_source_name),
+            name: getLocalized({
+              lang: env.context.lang,
+              languageNode: fundingSource.funding_source_name,
+            })[0],
           })),
       },
 

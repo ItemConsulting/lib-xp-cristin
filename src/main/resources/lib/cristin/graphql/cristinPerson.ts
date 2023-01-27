@@ -32,7 +32,20 @@ export function createObjectTypeCristinPerson(context: Context, options?: Contex
 
       position: {
         type: GraphQLString,
-        resolve: (env: GraphQLResolverEnvironment<CristinPersonAffiliation>) => getLocalized(env, env.source.position),
+        resolve: (env: GraphQLResolverEnvironment<CristinPersonAffiliation>): string | undefined =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.position,
+          })[0],
+      },
+
+      positionLang: {
+        type: GraphQLString,
+        resolve: (env: GraphQLResolverEnvironment<CristinPersonAffiliation>): string =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.position,
+          })[1],
       },
 
       active: {

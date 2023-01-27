@@ -27,7 +27,20 @@ export function createObjectTypeCristinInstitution(context: Context, options?: C
 
       institutionName: {
         type: GraphQLString,
-        resolve: (env: GraphQLResolverEnvironment<Institution>) => getLocalized(env, env.source.institution_name),
+        resolve: (env: GraphQLResolverEnvironment<Institution>): string | undefined =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.institution_name,
+          })[0],
+      },
+
+      institutionNameLang: {
+        type: GraphQLString,
+        resolve: (env: GraphQLResolverEnvironment<Institution>): string | undefined =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.institution_name,
+          })[1],
       },
 
       acronym: {

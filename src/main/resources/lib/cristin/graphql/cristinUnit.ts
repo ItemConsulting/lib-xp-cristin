@@ -21,7 +21,11 @@ export function createObjectTypeCristinUnit(context: Context, options?: ContextO
 
       unitName: {
         type: GraphQLString,
-        resolve: (env: GraphQLResolverEnvironment<Unit>) => getLocalized(env, env.source.unit_name),
+        resolve: (env: GraphQLResolverEnvironment<Unit>): string | undefined =>
+          getLocalized({
+            lang: env.context.lang,
+            languageNode: env.source.unit_name,
+          })[0],
       },
 
       institution: {
