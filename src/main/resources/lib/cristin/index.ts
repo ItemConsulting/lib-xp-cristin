@@ -22,6 +22,12 @@ import {
   REPO_CRISTIN_RESULT_CONTRIBUTORS,
   REPO_CRISTIN_RESULTS,
   REPO_CRISTIN_UNITS,
+  TYPE_CRISTIN_INSTITUTION,
+  TYPE_CRISTIN_PERSON,
+  TYPE_CRISTIN_PROJECT,
+  TYPE_CRISTIN_RESULT,
+  TYPE_CRISTIN_RESULT_CONTRIBUTOR,
+  TYPE_CRISTIN_UNIT,
 } from "/lib/cristin/constants";
 import type { Person, Institution, Project, Unit, Result, ListOfResultContributors } from "./types/generated";
 export type {
@@ -63,6 +69,7 @@ export function getCristinPerson(id: string): Person | void {
       id,
       data: fetchPerson({ id }),
       repoId: REPO_CRISTIN_PERSONS,
+      type: TYPE_CRISTIN_PERSON,
     })
   );
 }
@@ -78,6 +85,7 @@ export function getCristinInstitution(id: string): Institution | void {
       id,
       data: fetchInstitution({ id }),
       repoId: REPO_CRISTIN_INSTITUTIONS,
+      type: TYPE_CRISTIN_INSTITUTION,
     })
   );
 }
@@ -93,6 +101,7 @@ export function getCristinProject(id: string): Project | void {
       id,
       data: fetchProject({ id }),
       repoId: REPO_CRISTIN_PROJECTS,
+      type: TYPE_CRISTIN_PROJECT,
     })
   );
 }
@@ -108,6 +117,7 @@ export function getCristinUnit(id: string): Unit | void {
       id,
       data: fetchUnit({ id }),
       repoId: REPO_CRISTIN_UNITS,
+      type: TYPE_CRISTIN_UNIT,
     })
   );
 }
@@ -123,6 +133,7 @@ export function getCristinResult(id: string): Result | void {
       id,
       data: fetchResult({ id }),
       repoId: REPO_CRISTIN_RESULTS,
+      type: TYPE_CRISTIN_RESULT,
     })
   );
 }
@@ -134,6 +145,7 @@ export function getCristinResultContributors(id: string): ListOfResultContributo
       id,
       data: fetchResultContributors({ id }),
       repoId: REPO_CRISTIN_RESULT_CONTRIBUTORS,
+      type: TYPE_CRISTIN_RESULT_CONTRIBUTOR,
     })
   );
 }

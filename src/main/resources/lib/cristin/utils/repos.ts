@@ -4,9 +4,10 @@ import { BRANCH_MASTER, DEFAULT_PERMISSIONS } from "/lib/cristin/constants";
 import { forceArray, notNullOrUndefined } from "/lib/cristin/utils";
 import { connectToRepoAsAdmin } from "/lib/cristin/utils/contexts";
 
-export interface CristinNode<Data> {
+export interface CristinNode<Data, Type extends string> {
   _name: string;
   data: Data;
+  type: Type;
   topics?: Array<string>;
   hidden?: boolean;
 }
@@ -59,14 +60,19 @@ export function getEntriesByName<NodeData>(repoId: string, names: Array<string>)
   return forceArray(connection.get<NodeData>(ids)).filter(notNullOrUndefined);
 }
 
-export function saveToRepo<NodeData>({ data, id, repoId }: SaveToRepoParams<NodeData>): NodeData | void {
+export function saveToRepo<NodeData, Type extends string>({
+  data,
+  type,
+  id,
+  repoId,
+}: SaveToRepoParams<NodeData, Type>): NodeData | void {
   if (data) {
     try {
       const connection = connectToRepoAsAdmin({
         repoId,
         branch: BRANCH_MASTER,
       });
-      connection.create(getCristinNodeCreateParams<NodeData>(id, data));
+      connection.create(getCristinNodeCreateParams<NodeData, Type>(id, data, type));
       connection.refresh("ALL");
     } catch (e) {
       log.error(`Could not create content in repo "${repoId}" with id: "${id}"`, e);
@@ -76,21 +82,24 @@ export function saveToRepo<NodeData>({ data, id, repoId }: SaveToRepoParams<Node
   }
 }
 
-function getCristinNodeCreateParams<NodeData>(id: string, data: NodeData): CristinNode<NodeData> & CreateNodeParams {
+function getCristinNodeCreateParams<NodeData, Type extends string>(
+  id: string,
+  data: NodeData,
+  type: Type
+): CristinNode<NodeData, Type> & CreateNodeParams {
   return {
-    // _indexConfig: {
-    //   default: "fulltext",
-    // },
     _inheritsPermissions: true,
     _name: id,
     _parentPath: "/",
     data,
+    type,
     topics: [],
   };
 }
 
-export interface SaveToRepoParams<NodeData> {
+export interface SaveToRepoParams<NodeData, Type extends string> {
   id: string;
   repoId: string;
+  type: Type;
   data?: NodeData;
 }
