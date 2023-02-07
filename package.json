@@ -1,6 +1,6 @@
 {
   "name": "@item-enonic-types/lib-cristin",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Library for retrieving and storing data from Cristin",
   "license": "MIT",
   "files": [
@@ -23,8 +23,8 @@
     "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
     "@babel/register": "^7.18.9",
-    "@typescript-eslint/eslint-plugin": "^5.50.0",
-    "@typescript-eslint/parser": "^5.50.0",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
     "babel-loader": "^9.1.2",
     "browserslist-config-enonic": "^1.0.7",
     "cross-env": "^7.0.3",

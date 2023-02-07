@@ -19,7 +19,7 @@ export function getTranslator(
     });
 }
 
-function getCristinLanguage(language: string): CristinLocale {
+export function getCristinLanguage(language: string): CristinLocale {
   return language.indexOf("en") !== -1 ? CRISTIN_LOCALE_ENGLISH : CRISTIN_LOCALE_NORWEGIAN;
 }
 

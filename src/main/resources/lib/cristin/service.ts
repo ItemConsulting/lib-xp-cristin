@@ -174,7 +174,7 @@ export function fetchResult({ id, lang = DEFAULT_PARAMS_LANG }: GetSingleParams)
   });
 }
 
-export function fetchPersonResults({ id, ...params }: GetPersonResultsParams): ListOfResults {
+export function fetchPersonResults({ id, ...params }: GetPersonResultsParams): FetchResponse<ListOfResults> {
   const url = `https://api.cristin.no/v2/persons/${id}/results`;
   const res = httpRequest({
     url,
@@ -186,11 +186,17 @@ export function fetchPersonResults({ id, ...params }: GetPersonResultsParams): L
     },
   });
 
-  return parseResponse<ListOfResults>({
+  const data = parseResponse<ListOfResults>({
     res,
     url,
     errorMessage: `Could not get list of results for person ${id} from Cristin`,
   });
+
+  return {
+    count: data.length,
+    total: getTotalCountHeader(res) || data.length,
+    data,
+  };
 }
 
 export function fetchResultContributors({ id, lang = DEFAULT_PARAMS_LANG }: GetSingleParams): ListOfResultContributors {
