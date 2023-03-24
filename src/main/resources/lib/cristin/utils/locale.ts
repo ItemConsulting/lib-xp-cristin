@@ -1,5 +1,3 @@
-import type { Content } from "@enonic-types/core";
-
 export const CRISTIN_LOCALE_NORWEGIAN = "nb";
 export const CRISTIN_LOCALE_ENGLISH = "en";
 
@@ -8,7 +6,7 @@ export type LanguageNode = { [k: string]: string };
 export type TextAndLanguage = [text: string | undefined, language: CristinLocale];
 
 export function getTranslator(
-  content: Content<unknown>,
+  content: { language?: string },
   cristinContent: { original_language?: string }
 ): (languageNode?: LanguageNode) => TextAndLanguage {
   return (languageNode: LanguageNode) =>
