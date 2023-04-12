@@ -47,6 +47,8 @@ export type {
   Institution,
   ListOfUnits,
   Unit,
+  ListOfFundings,
+  Funding,
   CristinResultContributor,
   CristinResultContributorAffiliation,
   CristinResultContributorAffiliationsRole,

@@ -14,7 +14,7 @@ export const REPO_CRISTIN_PROJECTS = "no.item.cristin.projects";
 export const REPO_CRISTIN_RESULTS = "no.item.cristin.results";
 export const REPO_CRISTIN_RESULT_CONTRIBUTORS = "no.item.cristin.resultcontributors";
 export const REPO_CRISTIN_UNITS = "no.item.cristin.units";
-export const REPO_CRISTIN_FUNDING = "no.item.cristin.funding";
+export const REPO_CRISTIN_FUNDING = "no.item.cristin.fundings";
 
 export const BRANCH_MASTER = "master";
 export const URL_CRISTIN = "https://api.cristin.no/v2";
