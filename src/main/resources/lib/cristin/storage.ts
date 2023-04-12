@@ -1,4 +1,4 @@
-import type { Person, Project, Result, Institution, Unit, ListOfResultContributors } from "./types/generated";
+import type { Person, Project, Result, Institution, Unit, ListOfResultContributors, Funding } from "./types/generated";
 import {
   TYPE_CRISTIN_INSTITUTION,
   TYPE_CRISTIN_PERSON,
@@ -6,12 +6,14 @@ import {
   TYPE_CRISTIN_RESULT,
   TYPE_CRISTIN_RESULT_CONTRIBUTOR,
   TYPE_CRISTIN_UNIT,
+  TYPE_CRISTIN_FUNDING,
   REPO_CRISTIN_INSTITUTIONS,
   REPO_CRISTIN_PERSONS,
   REPO_CRISTIN_PROJECTS,
   REPO_CRISTIN_RESULT_CONTRIBUTORS,
   REPO_CRISTIN_RESULTS,
   REPO_CRISTIN_UNITS,
+  REPO_CRISTIN_FUNDING,
 } from "/lib/cristin/constants";
 import { getEntriesByName, type CristinNode } from "/lib/cristin/utils/repos";
 import { forceArray } from "/lib/cristin/utils";
@@ -80,6 +82,17 @@ export function lookupResultContributors(
     REPO_CRISTIN_RESULT_CONTRIBUTORS,
     forceArray(ids)
   ).map((node) => forceArray(node.data));
+
+  return Array.isArray(ids) ? entries : entries[0];
+}
+
+export function lookupFunding(id: string): Funding | undefined;
+export function lookupFunding(ids: Array<string>): Array<Funding>;
+export function lookupFunding(ids: string | Array<string>): Funding | Array<Funding> | undefined {
+  const entries = getEntriesByName<CristinNode<Funding, typeof TYPE_CRISTIN_FUNDING>>(
+    REPO_CRISTIN_FUNDING,
+    forceArray(ids)
+  ).map((node) => node.data);
 
   return Array.isArray(ids) ? entries : entries[0];
 }

@@ -19,8 +19,10 @@ import type {
   Unit,
   Result,
   ListOfResultContributors,
+  Funding,
 } from "./types/generated";
 import { ByteSource } from "@enonic-types/core";
+import { ListOfFundings } from "./types/generated";
 
 export interface FetchResponse<Data> {
   count: number;
@@ -323,6 +325,48 @@ export function fetchUnit({ id, lang = DEFAULT_PARAMS_LANG }: GetSingleParams): 
   });
 }
 
+export function fetchFundings(params: GetFundingsParams): FetchResponse<ListOfFundings> {
+  const url = `${URL_CRISTIN}/fundings`;
+  const res = httpRequest({
+    url,
+    method: "GET",
+    connectionTimeout: 30000,
+    readTimeout: 30000,
+    params: {
+      lang: DEFAULT_PARAMS_LANG,
+      per_page: DEFAULT_PARAMS_PER_PAGE,
+      ...params,
+    },
+  });
+
+  const data = parseResponse<ListOfFundings>({
+    res,
+    url,
+    errorMessage: "Could not get fundings from Cristin",
+  });
+
+  return {
+    count: data.length,
+    total: getTotalCountHeader(res) || data.length,
+    data,
+  };
+}
+
+export function fetchFunding({ id, lang = DEFAULT_PARAMS_LANG }: GetSingleParams): Funding {
+  const url = `${URL_CRISTIN}/fundings/${id}`;
+  const res = httpRequest({
+    url,
+    method: "GET",
+    params: { lang },
+  });
+
+  return parseResponse<Funding>({
+    res,
+    url,
+    errorMessage: "Could not get funding from Cristin",
+  });
+}
+
 function getTotalCountHeader(res: HttpResponse): number {
   return parseInt(res.headers["x-total-count"] ?? "");
 }
@@ -422,4 +466,16 @@ export interface GetUnitsParams {
   lang?: string;
   page?: string;
   per_page?: string;
+}
+
+export interface GetFundingsParams {
+  id?: string;
+  funding_source_name?: string;
+  funding_source?: string;
+  project_code?: string;
+  funding?: string;
+  lang?: string;
+  page?: string;
+  per_page?: string;
+  fields?: string;
 }

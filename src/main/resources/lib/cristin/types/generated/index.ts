@@ -11,6 +11,8 @@ export type ListOfInstitutions = import("./institutionsList_GET_response").ListO
 export type Institution = import("./institutions_GET_response").Institution;
 export type ListOfUnits = import("./unitsList_GET_response").ListOfUnits;
 export type Unit = import("./units_GET_response").Unit;
+export type ListOfFundings = import("./fundingsList_GET_response").ListOfFundings;
+export type Funding = import("./fundings_GET_response").Funding;
 
 export type CristinResultContributor = Unarray<ListOfResultContributors>;
 export type CristinResultContributorAffiliation = NonNullable<Unarray<CristinResultContributor["affiliations"]>> & {

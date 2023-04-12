@@ -1,0 +1,78 @@
+{
+  "title": "Funding",
+  "description": "Response of GET lookup requests.",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "required": [
+    "cristin_funding_id",
+    "project_code",
+    "funding_source"
+  ],
+  "definitions": {
+    "cristin_id": {
+      "type": "string",
+      "pattern": "^[0-9]+$",
+      "minLength": 1,
+      "maxLength": 8,
+      "description": "Cristin-IDs consist of 1 to 8 digits."
+    },
+    "language_code": {
+      "type": "string",
+      "pattern": "^[a-z]{2}$",
+      "description": "Lower case ISO 639-1 language code."
+    },
+    "language_object": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]{2}$": {
+          "type": "string",
+          "pattern": "\\w"
+        }
+      }
+    }
+  },
+  "properties": {
+    "cristin_funding_id": {
+      "$ref": "#/definitions/cristin_id",
+      "description": "Cristin funding id'."
+    },
+    "project_code": {
+      "type": "string",
+      "description": "The project code of the funding"
+    },
+    "funding_source": {
+      "type": "object",
+      "description": "The funding source",
+      "items": {
+        "code": {
+          "type": "string",
+          "description": "The identifying code of the funding source"
+        },
+        "name": {
+          "$ref": "#/definitions/language_object",
+          "description": "The name of the funding source"
+        }
+      }
+    },
+    "amount": {
+      "type": "integer",
+      "description": "The amount given for this funding"
+    },
+    "period": {
+      "type": "object",
+      "description": "The period of the funding, given in uearFrom -> yearTo",
+      "items": {
+        "year_from": {
+          "type": "short",
+          "description": "The start of the funding period"
+        },
+        "year_to": {
+          "type": "short",
+          "description": "The end of the funding period"
+        }
+      }
+    }
+  }
+}
+

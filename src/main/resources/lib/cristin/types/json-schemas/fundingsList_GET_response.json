@@ -1,0 +1,66 @@
+{
+  "title": "List of fundings",
+  "description": "Response of a GET request. Lists fundings matching specified search filters, or all.",
+  "type": "array",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "required": [
+    "cristin_funding_id",
+    "project_code",
+    "funding_source"
+  ],
+  "definitions": {
+    "cristin_id": {
+      "type": "string",
+      "pattern": "^[0-9]+$",
+      "minLength": 1,
+      "maxLength": 8,
+      "description": "Cristin-IDs consist of 1 to 8 digits."
+    },
+    "language_object": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z]{2}$": {
+          "type": "string",
+          "pattern": "\\w"
+        }
+      }
+    },
+    "language_code": {
+      "type": "string",
+      "pattern": "^[a-z]{2}$",
+      "description": "Lower case ISO 639-1 language code."
+    }
+  },
+  "items": {
+    "type": "object",
+    "properties": {
+      "cristin_funding_id": {
+        "$ref": "#/definitions/cristin_id"
+      },
+      "project_code": {
+        "type": "string",
+        "description": "The project code of the funding"
+      },
+      "funding_source": {
+        "type": "object",
+        "description": "The funding source",
+        "items": {
+          "code": {
+            "type": "string",
+            "description": "The identifying code of the funding source"
+          },
+          "name": {
+            "$ref": "#/definitions/language_object",
+            "description": "The name of the funding source"
+          }
+        }
+      },
+      "url": {
+        "type": "string",
+        "format": "uri",
+        "description": "URL of the Web service that returns extended information about this funding."
+      }
+    }
+  }
+}

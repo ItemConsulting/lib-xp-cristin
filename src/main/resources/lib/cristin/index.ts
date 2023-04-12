@@ -5,9 +5,11 @@ import {
   lookupUnit,
   lookupResult,
   lookupResultContributors,
+  lookupFunding,
 } from "/lib/cristin/storage";
 import { saveToRepo } from "/lib/cristin/utils/repos";
 import {
+  fetchFunding,
   fetchInstitution,
   fetchPerson,
   fetchProject,
@@ -16,12 +18,14 @@ import {
   fetchUnit,
 } from "/lib/cristin/service";
 import {
+  REPO_CRISTIN_FUNDING,
   REPO_CRISTIN_INSTITUTIONS,
   REPO_CRISTIN_PERSONS,
   REPO_CRISTIN_PROJECTS,
   REPO_CRISTIN_RESULT_CONTRIBUTORS,
   REPO_CRISTIN_RESULTS,
   REPO_CRISTIN_UNITS,
+  TYPE_CRISTIN_FUNDING,
   TYPE_CRISTIN_INSTITUTION,
   TYPE_CRISTIN_PERSON,
   TYPE_CRISTIN_PROJECT,
@@ -29,7 +33,7 @@ import {
   TYPE_CRISTIN_RESULT_CONTRIBUTOR,
   TYPE_CRISTIN_UNIT,
 } from "/lib/cristin/constants";
-import type { Person, Institution, Project, Unit, Result, ListOfResultContributors } from "./types/generated";
+import type { Person, Institution, Project, Unit, Result, ListOfResultContributors, Funding } from "./types/generated";
 export type {
   Unarray,
   ListOfPersons,
@@ -146,6 +150,22 @@ export function getCristinResultContributors(id: string): ListOfResultContributo
       data: fetchResultContributors({ id }),
       repoId: REPO_CRISTIN_RESULT_CONTRIBUTORS,
       type: TYPE_CRISTIN_RESULT_CONTRIBUTOR,
+    })
+  );
+}
+
+export function getCristinFundings(ids: Array<string>): Array<Funding> {
+  return ids.map((id) => getCristinFunding(id)).filter(notNullOrUndefined);
+}
+
+export function getCristinFunding(id: string): Funding | void {
+  return (
+    lookupFunding(id) ??
+    saveToRepo({
+      id,
+      data: fetchFunding({ id }),
+      repoId: REPO_CRISTIN_FUNDING,
+      type: TYPE_CRISTIN_FUNDING,
     })
   );
 }
