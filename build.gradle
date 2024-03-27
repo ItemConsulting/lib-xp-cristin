@@ -5,12 +5,15 @@ plugins {
   id "com.github.node-gradle.node" version '3.5.1'
 }
 
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
 dependencies {
   compileOnly "com.enonic.xp:lib-repo:${xpVersion}"
   compileOnly "com.enonic.xp:lib-node:${xpVersion}"
   compileOnly "com.enonic.xp:lib-portal:${xpVersion}"
   compileOnly "com.enonic.xp:lib-value:${xpVersion}"
-  compileOnly "com.enonic.lib:lib-http-client:3.2.1"
+  compileOnly "com.enonic.lib:lib-http-client::3.2.1"
 }
 
 repositories {
