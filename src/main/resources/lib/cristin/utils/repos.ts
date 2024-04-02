@@ -3,7 +3,8 @@ import { connect, type RepoConnection, type NodeQueryResultHit, type CreateNodeP
 import { BRANCH_MASTER, DEFAULT_PERMISSIONS } from "/lib/cristin/constants";
 import { forceArray, notNullOrUndefined } from "/lib/cristin/utils";
 import { connectToRepoAsAdmin } from "/lib/cristin/utils/contexts";
-import { Filter } from "/lib/xp/node";
+import type { Filter } from "/lib/xp/node";
+
 export interface CristinNode<Data, Type extends string> {
   _name: string;
   data: Data;
