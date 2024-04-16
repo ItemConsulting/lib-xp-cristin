@@ -1,4 +1,13 @@
-import type { Person, Project, Result, Institution, Unit, ListOfResultContributors, Funding } from "./types/generated";
+import type {
+  Person,
+  Project,
+  Result,
+  Institution,
+  Unit,
+  ListOfResultContributors,
+  Funding,
+  ListOfResults,
+} from "./types/generated";
 import {
   TYPE_CRISTIN_INSTITUTION,
   TYPE_CRISTIN_PERSON,
@@ -78,10 +87,11 @@ export function lookupResultContributors(ids: Array<string>): Array<ListOfResult
 export function lookupResultContributors(
   ids: string | Array<string>
 ): ListOfResultContributors | Array<ListOfResultContributors> | undefined {
-  const entries = getEntriesByName<CristinNode<ListOfResultContributors, typeof TYPE_CRISTIN_RESULT_CONTRIBUTOR>>(
-    REPO_CRISTIN_RESULT_CONTRIBUTORS,
-    forceArray(ids)
-  ).map((node) => forceArray(node.data));
+  const entries = getEntriesByName<
+    CristinNode<ListOfResultContributors | ListOfResults, typeof TYPE_CRISTIN_RESULT_CONTRIBUTOR>
+  >(REPO_CRISTIN_RESULT_CONTRIBUTORS, forceArray(ids), [{ exists: { field: "data.cristin_person_id" } }]).map((node) =>
+    forceArray(node.data)
+  );
 
   return Array.isArray(ids) ? entries : entries[0];
 }

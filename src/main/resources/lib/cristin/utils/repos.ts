@@ -3,6 +3,7 @@ import { connect, type RepoConnection, type NodeQueryResultHit, type CreateNodeP
 import { BRANCH_MASTER, DEFAULT_PERMISSIONS } from "/lib/cristin/constants";
 import { forceArray, notNullOrUndefined } from "/lib/cristin/utils";
 import { connectToRepoAsAdmin } from "/lib/cristin/utils/contexts";
+import type { Filter } from "/lib/xp/node";
 
 export interface CristinNode<Data, Type extends string> {
   _name: string;
@@ -28,7 +29,8 @@ export function ensureRepoExist(repoName: string): boolean {
 
 export function getNodeByDataId(
   connection: RepoConnection,
-  ids: string | Array<string>
+  ids: string | Array<string>,
+  mustFilters: Filter[] = []
 ): ReadonlyArray<NodeQueryResultHit> {
   const values = forceArray(ids);
 
@@ -36,27 +38,41 @@ export function getNodeByDataId(
     count: values.length,
     filters: {
       boolean: {
-        must: {
-          hasValue: {
-            values,
-            field: "_name",
+        must: [
+          {
+            hasValue: {
+              values,
+              field: "_name",
+            },
           },
-        },
-        mustNot: {
-          ids: {
-            values: ["000-000-000-000"],
+          ...mustFilters,
+        ],
+        mustNot: [
+          {
+            hasValue: {
+              field: "removedFromCristin",
+              values: [true],
+            },
           },
-        },
+          {
+            ids: {
+              values: ["000-000-000-000"],
+            },
+          },
+        ],
       },
     },
   }).hits;
 }
 
-export function getEntriesByName<NodeData>(repoId: string, names: Array<string>): Array<Node<NodeData>> {
+export function getEntriesByName<NodeData>(
+  repoId: string,
+  names: Array<string>,
+  mustFilters: Filter[] = []
+): Array<Node<NodeData>> {
   const connection = connect({ repoId, branch: BRANCH_MASTER });
-  const res = getNodeByDataId(connection, names);
+  const res = getNodeByDataId(connection, names, mustFilters);
   const ids = res.map((node) => node.id);
-
   return forceArray(connection.get<NodeData>(ids)).filter(notNullOrUndefined);
 }
 
