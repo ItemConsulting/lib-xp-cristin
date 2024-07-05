@@ -67,24 +67,13 @@ export function extensions(graphQL: GraphQL): Extensions {
         description: "A Cristin Result contributors affiliations",
         fields: {
           role: {
-            type: graphQL.reference(GRAPHQL_OBJECT_NAME_CRISTIN_RESULT_CONTRIBUTORS_AFFILIATION_ROLE),
-            // resolve: (
-            //   env: GraphQLResolverEnvironment<CristinResultContributorAffiliation>
-            // ): CristinResultContributorAffiliationsRole | undefined => env.source.role,
+            type: graphQL.reference(GRAPHQL_OBJECT_NAME_CRISTIN_RESULT_CONTRIBUTORS_AFFILIATION_ROLE)
           },
           institution: {
-            type: graphQL.reference(GRAPHQL_OBJECT_NAME_CRISTIN_INSTITUTION),
-            // resolve: (env: GraphQLResolverEnvironment<CristinResultContributorAffiliation>): Institution | void => {
-            //   return env.source.institution?.cristin_institution_id
-            //     ? getCristinInstitution(env.source.institution?.cristin_institution_id)
-            //     : undefined;
-            //},
+            type: graphQL.reference(GRAPHQL_OBJECT_NAME_CRISTIN_INSTITUTION)
           },
           unit: {
-            type: graphQL.reference(GRAPHQL_OBJECT_NAME_CRISTIN_UNIT),
-            // resolve: (env: GraphQLResolverEnvironment<CristinResultContributorAffiliation>): Unit | void => {
-            //   return env.source.unit?.cristin_unit_id ? getCristinUnit(env.source.unit?.cristin_unit_id) : undefined;
-            //},
+            type: graphQL.reference(GRAPHQL_OBJECT_NAME_CRISTIN_UNIT)
           },
         },
       },
@@ -105,7 +94,7 @@ export function extensions(graphQL: GraphQL): Extensions {
             type: graphQL.GraphQLInt,
           },
           affiliations: {
-            type: graphQL.list(GRAPHQL_OBJECT_NAME_CRISTIN_RESULT_CONTRIBUTORS_AFFILIATION)
+            type: graphQL.list(graphQL.reference(GRAPHQL_OBJECT_NAME_CRISTIN_RESULT_CONTRIBUTORS_AFFILIATION))
           },
         },
       },
@@ -115,11 +104,9 @@ export function extensions(graphQL: GraphQL): Extensions {
         fields: {
           urlType: {
             type: graphQL.nonNull(graphQL.GraphQLString),
-            // resolve: (env: GraphQLResolverEnvironment<CristinResultLink>) => env.source.url_type,
           },
           url: {
             type: graphQL.nonNull(graphQL.GraphQLString),
-            // resolve: (env: GraphQLResolverEnvironment<CristinResultLink>) => env.source.url,
           },
         },
       },
@@ -149,8 +136,7 @@ export function extensions(graphQL: GraphQL): Extensions {
         description: "A series",
         fields: {
           cristinJournalId: {
-            type: graphQL.GraphQLString,
-            // resolve: (env: GraphQLResolverEnvironment<CristinResultSeries>) => env.source.cristin_journal_id,
+            type: graphQL.GraphQLString
           },
           name: {
             type: graphQL.GraphQLString,

@@ -70,7 +70,7 @@ export function extensions(graphQL: GraphQL): Extensions {
             : undefined
         },
         dataAsJson: (env) => {
-          env.source
+          return env.source
         }
       }
     }
