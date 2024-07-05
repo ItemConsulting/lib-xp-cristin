@@ -2,9 +2,27 @@ import { reference } from "/lib/graphql";
 
 export const GRAPHQL_OBJECT_NAME_CRISTIN_UNIT = "no_item_cristin_Unit";
 export const GRAPHQL_OBJECT_NAME_CRISTIN_INSTITUTION = "no_item_cristin_Institution";
+
 export const GRAPHQL_OBJECT_NAME_CRISTIN_PERSON = "no_item_cristin_Person";
+export const GRAPHQL_OBJECT_NAME_CRISTIN_PERSON_AFFILIATION = `no_item_cristin_Person_Affiliation`
+
 export const GRAPHQL_OBJECT_NAME_CRISTIN_PROJECT = "no_item_cristin_Project";
+export const GRAPHQL_OBJECT_NAME_CRISTIN_PROJECT_STATUS = "no_item_cristin_Project_Status";
+export const GRAPHQL_OBJECT_NAME_CRISTIN_PROJECT_FUNDING_SOURCE = "no_item_cristin_Project_Funding_source";
+export const GRAPHQL_OBJECT_NAME_CRISTIN_PROJECT_PARTICIPANT = "no_item_cristin_Project_Participant";
+export const GRAPHQL_OBJECT_NAME_CRISTIN_PROJECT_COORDINATING_INSTITUTION = "no_item_cristin_Project_Coordinating_institution"
+export const GRAPHQL_OBJECT_NAME_CRISTIN_PROJECT_PARTICIPANT_ROLE = "no_item_cristin_Project_Participant_Role"
+
 export const GRAPHQL_OBJECT_NAME_CRISTIN_RESULT = "no_item_cristin_Result";
+export const GRAPHQL_OBJECT_NAME_CRISTIN_RESULT_CATEGORY = "no_item_cristin_Result_Category";
+export const GRAPHQL_OBJECT_NAME_CRISTIN_RESULT_JOURNAL = "no_item_cristin_Result_Journal";
+export const GRAPHQL_OBJECT_NAME_CRISTIN_RESULT_CONTRIBUTORS_AFFILIATION_ROLE = "no_item_cristin_Result_Contributors_Affiliation_Role";
+export const GRAPHQL_OBJECT_NAME_CRISTIN_RESULT_CONTRIBUTORS_AFFILIATION = "no_item_cristin_Result_Contributors_Affiliation";
+export const GRAPHQL_OBJECT_NAME_CRISTIN_RESULT_CONTRIBUTORS = "no_item_cristin_Result_Contributors";
+export const GRAPHQL_OBJECT_NAME_CRISTIN_RESULT_LINK = "no_item_cristin_Result_Link";
+export const GRAPHQL_OBJECT_NAME_CRISTIN_RESULT_PUBLISHER = "no_item_cristin_Result_Publisher";
+export const GRAPHQL_OBJECT_NAME_CRISTIN_RESULT_SERIES = "no_item_cristin_Result_Series";
+
 
 export const GraphQLCristinPerson = reference(GRAPHQL_OBJECT_NAME_CRISTIN_PERSON);
 export const GraphQLCristinInstitution = reference(GRAPHQL_OBJECT_NAME_CRISTIN_INSTITUTION);

@@ -30,6 +30,7 @@
     "@enonic-types/lib-portal": "^7.12.1",
     "@enonic-types/lib-repo": "^7.12.1",
     "@enonic-types/lib-value": "^7.12.1",
+    "@enonic-types/guillotine": "^7.1.1",
     "@item-enonic-types/global": "^7.12.1",
     "@item-enonic-types/lib-graphql": "^2.0.2",
     "@item-enonic-types/lib-guillotine": "^5.5.0",
