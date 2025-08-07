@@ -18,7 +18,7 @@ To install this library you need to add a new dependency to your app's build.gra
 
 ```groovy
 repositories {
-  maven { url 'https://jitpack.io' }
+  maven { url "https://repo.itemtest.no/releases" }
 }
 
 dependencies {
@@ -27,7 +27,7 @@ dependencies {
   include "com.enonic.xp:lib-node:${xpVersion}"
   include "com.enonic.xp:lib-value:${xpVersion}"
   include "com.enonic.lib:lib-http-client:3.1.0"
-  include "no.item:lib-xp-cristin:1.0.15"
+  include "no.item:lib-xp-cristin:1.3.3"
 }
 ```
 
@@ -195,6 +195,8 @@ Deploy locally for testing purposes:
 ./gradlew publishToMavenLocal
 ```
 
-## Deploy to Jitpack
+## Deploy to Maven
 
-Go to the [Jitpack page for lib-xp-cristin](https://jitpack.io/#no.item/lib-xp-cristin) to deploy from Github.
+```bash
+./gradlew publish -P com.enonic.xp.app.production=true
+```
