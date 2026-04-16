@@ -11,6 +11,7 @@ export interface CristinNode<Data, Type extends string> {
   type: Type;
   topics?: Array<string>;
   hidden?: boolean;
+  queryParams?: Record<string, string>;
 }
 
 export function ensureRepoExist(repoName: string): boolean {
@@ -81,6 +82,7 @@ export function saveToRepo<NodeData, Type extends string>({
   type,
   id,
   repoId,
+  queryParams,
 }: SaveToRepoParams<NodeData, Type>): NodeData | void {
   if (data) {
     try {
@@ -88,7 +90,7 @@ export function saveToRepo<NodeData, Type extends string>({
         repoId,
         branch: BRANCH_MASTER,
       });
-      connection.create(getCristinNodeCreateParams<NodeData, Type>(id, data, type));
+      connection.create(getCristinNodeCreateParams<NodeData, Type>(id, data, type, queryParams));
       connection.refresh("ALL");
     } catch (e) {
       log.error(`Could not create content in repo "${repoId}" with id: "${id}"`, e);
@@ -101,7 +103,8 @@ export function saveToRepo<NodeData, Type extends string>({
 function getCristinNodeCreateParams<NodeData, Type extends string>(
   id: string,
   data: NodeData,
-  type: Type
+  type: Type,
+  queryParams?: Record<string, string>,
 ): CristinNode<NodeData, Type> & CreateNodeParams {
   return {
     _inheritsPermissions: true,
@@ -110,6 +113,7 @@ function getCristinNodeCreateParams<NodeData, Type extends string>(
     data,
     type,
     topics: [],
+    queryParams,
   };
 }
 
@@ -118,4 +122,5 @@ export interface SaveToRepoParams<NodeData, Type extends string> {
   repoId: string;
   type: Type;
   data?: NodeData;
+  queryParams?: Record<string, string>;
 }
